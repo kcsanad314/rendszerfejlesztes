@@ -8,19 +8,22 @@ using System.Threading.Tasks;
 
 namespace Netpincer_App_Beadando.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     public class UserController : Controller
     {
         private readonly ApplicationDbContext _db;
+        //private readonly IMapper _mapper;
         //public User user { get; set; }
 
         public UserController(ApplicationDbContext db)
         {
             _db = db;
+           //_mapper = mapper;
         }
-        // POST: UserController/Create
+
         [HttpPost]
+        //Creates a user record to the db from json
         public ActionResult Create([FromBody] User user)
         {
             _db.Users.Add(user);
@@ -28,22 +31,14 @@ namespace Netpincer_App_Beadando.Controllers
             return Ok();
         }
         [HttpGet]
-        public ActionResult test()
+        //if user's name and password already in the db, returns true
+        public bool Login([FromBody] LoginUser user)
         {
-            return Ok("asd");
-        }
-
-        // GET: UserController/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-
-        // GET: UserController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
+            if(_db.Users.Any(u => u.UserName == user.UserName && u.Password == user.Password))
+            {
+                return true;
+            }
+            return false;
         }
 
     }
