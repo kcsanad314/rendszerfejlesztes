@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Netpincer_App_Beadando.Models;
 using Netpincer_App_Beadando.Models.Entity;
 using System;
@@ -27,15 +28,16 @@ namespace Netpincer_App_Beadando.Controllers
             _db.SaveChanges();
             return Ok();
         }
-
+        
         [HttpPost]
         public IActionResult AddFoodCategory(FoodCategory foodCategory)
         {
-            
-            FoodCategory fc = new FoodCategory() {  
+            //init foodcategory object
+            FoodCategory fc = new FoodCategory() {
                 Name = foodCategory.Name,
                 RestaurantId = foodCategory.RestaurantId
             };
+            //init foodcategory's foodlist and fill it
             fc.Foods = new List<Food>();
             foodCategory.Foods.ForEach(food =>
             {
@@ -47,12 +49,31 @@ namespace Netpincer_App_Beadando.Controllers
                 };
                 fc.Foods.Add(_food);
             });
+            //search for the correct restaurant and add the previous objects to it
             Restaurant rest = _db.Restaurants.Find(fc.RestaurantId);
             rest.FoodCategories = new List<FoodCategory>();
             rest.FoodCategories.Add(fc);
             _db.Add(fc);
             _db.SaveChanges();
             return Ok();
+        }
+        //TODO:This 2 method needs to be reorganized to another controller
+        //Owner/GetRestaurants
+        [HttpGet]
+        public IActionResult GetRestaurants()
+        {
+            //returns with a list of all the restaurants
+            var result = _db.Restaurants.ToList();
+            return Ok(result);
+        }
+        //Owner/GetRestaurantFoodlist/{restaurantId}
+        [HttpGet]
+        [Route("{restaurantId}")]
+        public IActionResult GetRestaurantFoodList(int restaurantId)
+        {
+            //returns with a list of foodcategories and its foods of a specific restaurant
+            var result = _db.Restaurants.Where(r => r.Id == restaurantId).Include(r => r.FoodCategories).ThenInclude(fc => fc.Foods).ToList();
+            return Ok(result);
         }
     }
 }
