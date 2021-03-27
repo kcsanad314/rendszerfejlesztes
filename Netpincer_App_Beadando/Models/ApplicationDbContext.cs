@@ -1,12 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Netpincer_App_Beadando.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-//using System.Data.Entity;
-
-
+using Netpincer_App_Beadando.Models.Entity;
 
 namespace Netpincer_App_Beadando.Models
 {
@@ -16,6 +13,20 @@ namespace Netpincer_App_Beadando.Models
         {
         }
     public DbSet <User> Users { get; set; }
+    public DbSet<Restaurant> Restaurants { get; set; }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Restaurant>()
+                .HasMany<FoodCategory>(r => r.FoodCategories)
+                .WithOne(fc => fc.Restaurant)
+                .HasForeignKey(fc => fc.RestaurantId)
+                .OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<FoodCategory>()
+                .HasMany<Food>(fc => fc.Foods)
+                .WithOne(f => f.FoodCategory)
+                .HasForeignKey(f => f.FoodId)
+                .OnDelete(DeleteBehavior.Cascade);
+        }
     }
 }
