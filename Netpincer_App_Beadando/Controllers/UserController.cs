@@ -41,6 +41,5 @@ namespace Netpincer_App_Beadando.Controllers
             }
             return false;
         }
-
     }
 }
