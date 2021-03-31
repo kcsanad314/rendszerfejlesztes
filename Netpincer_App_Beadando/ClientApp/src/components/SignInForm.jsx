@@ -30,23 +30,17 @@ class SignInForm extends React.Component {
        }
        document.getElementById("signin-action").addEventListener("click", () => {
            const request = new XMLHttpRequest();
-           request.onreadystatechange = ()=> {
-               if (this.readyState == 4 && this.status == 200) {
-                   console.log(request.responseText);
-               }
-           }
            const url = "https://localhost:44329/api/User/Create";
-           /*
-           var type = "";
+           
+           let type = 0;
            switch (this.state.avatar) {
-               case "guest": type = "Customer";
+               case "guest": type = 0;
                    break;
-               case "owner": type = "Owner";
+               case "owner": type = 1;
                    break;
-               default: type = "Courier";
-                   break;
+               default: type = 2;
            }
-           */
+           
            const firstName = document.getElementById("firstname").value;
            const lastName = document.getElementById("lastname").value;
            const userName = document.getElementById("username").value;
@@ -58,7 +52,8 @@ class SignInForm extends React.Component {
                "Password": password,
                "ConfirmPassword": passwordAgain,
                "FirstName": firstName,
-               "LastName": lastName
+               "LastName": lastName,
+               "Type" : type
            }
            request.open("POST", url);
            request.setRequestHeader("Content-Type", "application/json");

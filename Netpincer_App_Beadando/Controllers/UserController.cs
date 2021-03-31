@@ -31,15 +31,21 @@ namespace Netpincer_App_Beadando.Controllers
             _db.SaveChanges();
             return Ok();
         }
-        [HttpGet]
+        [HttpPost]
         //if user's name and password already in the db, returns true
-        public bool Login([FromBody] LoginUser user)
+        public Tuple<UserType, int> Login([FromBody] LoginUser user)
         {
+            
+            var userList = _db.Users.Where(u => u.UserName == user.UserName && u.Password == user.Password).ToList();
+            if (userList.Count < 1) throw new ArgumentException("Nincs ilyen felhasználó!");
+            return new Tuple<UserType, int>(userList[0].Type, userList[0].Id);
+            /*
             if(_db.Users.Any(u => u.UserName == user.UserName && u.Password == user.Password))
             {
                 return true;
             }
             return false;
+            */
         }
     }
 }
