@@ -1,18 +1,27 @@
-import React from 'react'
+﻿import React from 'react'
 import './Restaurant.css'
 import RestRegistration from './RestRegistration'
 import Menu from './Menu'
 import ListFoods from "./ListFoods"
+
+
+
 
 class Restaurant extends React.Component {
 
    constructor(){
       super();
       this.state = {
-         id: 0
+          id: 0,
+          foods: []
       }
    }
 
+
+    /*
+     * Minden kategórián belülről kell kikérni a kajákat
+     * 
+    */
    componentDidMount(){
       const buttons = document.getElementsByClassName("sidebarButton");
       // container[0].classList.add("container-active");
@@ -28,16 +37,42 @@ class Restaurant extends React.Component {
             // }
             // console.log(this.state.avatar)
          });
-      }
-   }
+       }
+       const request = new XMLHttpRequest();
+       const url = "https://localhost:44329/api/Owner/GetRestaurantFoodList/1";
+       request.open("GET", url);
+       //request.setRequestHeader("Content-Type", "application/json");
+       request.onload = () => {
+           console.log(request.responseText);
+           const type = JSON.parse(request.responseText);
+           var food_cat = [];
+           console.log(type);
+           console.log(type[0].foodCategories);
+           for (let category of type[0].foodCategories) {
+               console.log(category.name);
+               food_cat.push(category);
+           }
+           this.setState({
+               foods: food_cat
+           })
+       }
+       request.send();
+    }
 
-   rendering(){
+    rendering() {
+      const food_arr = [];
+      let i = 0;
+      for (let food of this.state.foods) {
+          food_arr.push(<ListFoods key={i} category={food}/>);
+          i++;
+        }
+
       if(this.state.id === 1)
          return (<RestRegistration />)
       if(this.state.id === 2)
          return (<Menu />)
-      if(this.state.id === 3)
-         return (<ListFoods />)
+       if (this.state.id === 3)
+         return (food_arr)
    }
 
    render(){
