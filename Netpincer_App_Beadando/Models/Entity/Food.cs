@@ -17,5 +17,7 @@ namespace Netpincer_App_Beadando.Models.Entity
         //public bool isOnSale { get; set; }
         public FoodCategory FoodCategory { get; set; }
         public int FoodId { get; set; } //TODO: átírni FoodCategoryId-ra és migrálni
+        //public int OrderId { get; set; }
+        public List<OrderFood> OrderFoods{ get; set; }
     }
 }

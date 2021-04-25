@@ -2,3 +2,115 @@ button {
    width: 100px;
    height: 40px;
 }
+
+/* SIDEBAR */
+.sidebar-guest > div {
+   /* background-color: #fff; */
+}
+
+
+
+/* RESTAURANT LIST */
+.restaurants {
+   display: flex;
+   position: absolute;
+   top: 120px;
+   left: 180px;
+}
+
+.list {
+   /* position: absolute;
+   left: 90px; */
+}
+
+.container {
+   display: flex;
+}
+.container:hover { cursor: auto;}
+
+.list-button {
+   position: relative;
+   left: -50px;
+   width: 50px;
+   /* height: ; */
+   border-radius: 8px;
+   background-color: #ea8b7b;
+   opacity: 0.6;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   color: #202020;
+}
+.list-button:hover { cursor: pointer; }
+.list-button > img {
+   width: 35px;
+   transform: rotate(90deg);
+}
+.list-button:hover > img {
+   transition: 0.3s ease;
+   transform: rotate(0deg);
+}
+
+.restaurant-card {
+   width: 300px;
+   padding: 10px;
+   border: 2px solid #e3654f;
+   border-radius: 8px;
+}
+.name {
+   font-size: 22px;
+}
+.city {
+   font-size: 20px;
+}
+.description {
+   width: 200px;
+   margin-top: 10px;
+}
+
+.restaurant-card > div {
+   margin-bottom: 5px;
+}
+.city, .address, .description {
+   padding-left: 5px;
+}
+
+/* LIST-FOODS */
+.foods {
+   position: fixed;
+   top: 80px;
+   left: 520px;
+   width: 370px;
+   height: auto;
+   padding: 20px 15px;
+   border: 2px solid #34568B;
+   border-radius: 8px;
+}
+
+.category {
+   display: flex;
+   justify-content: center;
+   margin-left: 5px;
+   font-size: 21px;
+}
+
+.food {
+   margin-bottom: 10px;
+}
+.food:hover {
+   cursor: pointer;
+}
+
+
+/*    CART    */
+.cart {
+   position: absolute;
+   top: 30px;
+   right: -190px;
+   /* border: 2px solid green; */
+}
+
+.item > button {
+   width: 30px;
+   height: 30px;
+}

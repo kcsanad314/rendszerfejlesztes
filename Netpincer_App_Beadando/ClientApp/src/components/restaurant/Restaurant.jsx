@@ -2,10 +2,8 @@
 import './Restaurant.css'
 import RestRegistration from './RestRegistration'
 import Menu from './Menu'
-import ListFoods from "./ListFoods"
-
-
-
+import ListFoods from './ListFoods'
+import ManageOrders from './ManageOrders'
 
 class Restaurant extends React.Component {
 
@@ -13,14 +11,12 @@ class Restaurant extends React.Component {
       super();
       this.state = {
           id: 0,
-          foods: []
+          foods: jsonFoods
       }
    }
-
-
     /*
      * Minden kategórián belülről kell kikérni a kajákat
-     * 
+     *
     */
    componentDidMount(){
       const buttons = document.getElementsByClassName("sidebarButton");
@@ -38,7 +34,7 @@ class Restaurant extends React.Component {
             // console.log(this.state.avatar)
          });
        }
-       const request = new XMLHttpRequest();
+       /*const request = new XMLHttpRequest();
        const url = "https://localhost:44329/api/Owner/GetRestaurantFoodList/1";
        request.open("GET", url);
        //request.setRequestHeader("Content-Type", "application/json");
@@ -56,7 +52,7 @@ class Restaurant extends React.Component {
                foods: food_cat
            })
        }
-       request.send();
+       request.send();*/
     }
 
     rendering() {
@@ -70,9 +66,11 @@ class Restaurant extends React.Component {
       if(this.state.id === 1)
          return (<RestRegistration />)
       if(this.state.id === 2)
-         return (<Menu />)
-       if (this.state.id === 3)
-         return (food_arr)
+         return (<Menu categories="kecske" />)
+      if (this.state.id === 3)
+         return (<div className="list-foods">{food_arr}</div>)
+      if(this.state.id === 4)
+         return (<ManageOrders />)
    }
 
    render(){
@@ -82,6 +80,7 @@ class Restaurant extends React.Component {
                <div id="1" className="sidebarButton">Restaurant <br/>registration</div>
                <div id="2" className="sidebarButton">Menu</div>
                <div id="3" className="sidebarButton">List Foods</div>
+               <div id="4" className="sidebarButton">Manage<br/> Orders</div>
             </div>
             <div className="options">
                {this.rendering()}
@@ -92,3 +91,21 @@ class Restaurant extends React.Component {
 }
 
 export default Restaurant
+
+const jsonFoods = [
+   {
+      "name": "Italok",
+      "foods": [
+         {
+            "name": "Ruszki",
+            "price": "1400",
+            "allergens": "alkohol"
+         },
+         {
+            "name": "Ruszki",
+            "price": "1400",
+            "allergens": "alkohol"
+         }
+      ]
+   }
+];

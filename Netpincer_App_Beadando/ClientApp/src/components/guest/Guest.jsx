@@ -11,7 +11,7 @@ class Guest extends React.Component {
         };
     }
     componentDidMount() {
-        const buttons = document.getElementsByClassName("getfoods");
+        const buttons = document.getElementsByClassName("sidebarButton");
         for (let i = 0; i < buttons.length; i++) {
             buttons[i].addEventListener('click', () => {
                 this.setState({
@@ -19,24 +19,32 @@ class Guest extends React.Component {
                 });
             });
         }
+        // fetch("https://api.themoviedb.org/3/movie/550?api_key=27b80274c2b28a9b54c267cfb0068d79", {
+        //  	"method": "GET"
+        //  })
+        //  .then(response => {
+        //  	console.log(response.json());
+        //  })
+        //  .catch(err => {
+        //  	console.error(err);
+        //  });
     }
 
     rendering() {
-        switch (this.state.id) {
-            case 1:
-                return (<GuestListRestaurants />);
-                break;
-        }
+        if(this.state.id === 1)
+          return (<GuestListRestaurants />);
     }
 
     render() {
       return (
          <div className="guest">
-            <button className="getfoods">List restaurants</button>
-              {
-                  this.rendering()
-              }
-          </div>      
+            <div className="sidebar sidebar-guest">
+               <div id="1" className="sidebarButton">Restaurants</div>
+               <div id="2" className="sidebarButton"></div>
+               <div id="3" className="sidebarButton"></div>
+            </div>
+            {this.rendering()}           
+         </div>
       )
    }
 }

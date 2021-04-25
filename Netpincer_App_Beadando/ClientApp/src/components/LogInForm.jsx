@@ -1,14 +1,12 @@
 import React from 'react'
 import ActionButton from './ActionButton'
 
-
-
 /*
- * 1.) Bejelentkezés
- * 2.) Ha Owner, akkor még 1 request, amin f.név és pw-vel lekérjük a user id-t
- * 3.) (User id-t valahogy kimentjük)
- * 4.) User id alapján a másik oldalon le tudjuk kérni a rest id-t
- * 5.) Rest id alapján pedig az ételeket 
+ * 1.) Bejelentkezï¿½s
+ * 2.) Ha Owner, akkor mï¿½g 1 request, amin f.nï¿½v ï¿½s pw-vel lekï¿½rjï¿½k a user id-t
+ * 3.) (User id-t valahogy kimentjï¿½k)
+ * 4.) User id alapjï¿½n a mï¿½sik oldalon le tudjuk kï¿½rni a rest id-t
+ * 5.) Rest id alapjï¿½n pedig az ï¿½teleket
  */
 class LogInForm extends React.Component {
 
@@ -18,11 +16,11 @@ class LogInForm extends React.Component {
             link: ''
         };
     }
+    /*
     componentDidMount() {
-        document.getElementById("login").addEventListener("click", () =>
-        {
+        document.getElementById("login").addEventListener("click", () => {
             const request = new XMLHttpRequest();
-           
+
             const url = "https://localhost:44329/api/User/Login";
             const usrName = document.getElementById("username").value;
             const password = document.getElementById("password").value;
@@ -43,7 +41,7 @@ class LogInForm extends React.Component {
                             });
                             break;
                         case 2:
-                            //Majd a futárhoz vigyen
+                            //Majd a futï¿½rhoz vigyen
                             this.setState({
                                 link: '/restaurant'
                             });
@@ -55,12 +53,13 @@ class LogInForm extends React.Component {
                     }
                 }
                 else {
-                    alert("Nem jó");  
+                    alert("Nem jï¿½");
                 }
             }
             request.send(JSON.stringify(body));
-        })
+        });
     }
+    */
    render(){
       return (
          <form className="login-form">
@@ -70,13 +69,13 @@ class LogInForm extends React.Component {
             <input type="password" id="password"/>
             <div className="buttons">
                <ActionButton id="login" name="Log In" url={this.state.link }/>
-               <ActionButton id="signin" name="Sign In" url="/signin"/>
+               <ActionButton id="signup" name="Sign Up" url="/signup"/>
             </div>
          </form>
       )
     }
 
-    
+
 }
 
 export default LogInForm

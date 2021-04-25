@@ -3,8 +3,15 @@ import ActionButton from '../ActionButton'
 
 class Menu extends React.Component {
 
+   constructor(){
+      super();
+      this.state = {
+         category: 0
+      }
+      this.catSelected = this.catSelected.bind(this);
+   }
 
-    componentDidMount() {
+    /*componentDidMount() {
         document.getElementById("savemenu").addEventListener("click", () => {
             const request = new XMLHttpRequest();
             request.onreadystatechange = () => {
@@ -38,15 +45,42 @@ class Menu extends React.Component {
             request.setRequestHeader("Content-Type", "application/json");
             request.send(JSON.stringify(body));
         });
+    }*/
 
-    }
+   renderCategories(){
+      const cats = [];
+      for(let i = 0; i < this.props.categories.length; i++){
+         cats.push(<option key={i} value={i}>{i}</option>);
+      }
+      return cats;
+   }
+   catSelected(e){
+      this.setState({
+         category: e.target.value
+      });
+   }
+
+   addCategory(){
+      const cat = prompt("Please enter the new category name:", "");
+      if(cat !== ""){
+         let select = document.getElementById("category-list");
+         let opt = document.createElement('option');
+         opt.innerHTML = cat;
+         select.appendChild(opt);
+         select.options.selectedIndex = select.length - 1;
+      }
+   }
 
    render(){
+      //console.log(this.state.category)
       return (
          <div className="menu">
             <div className="category">
                Category name:
-               <input type="text" id="category"/>
+               <select id="category-list" onChange={this.catSelected}>
+                  {this.renderCategories()}
+               </select>
+               <button id="add-category" onClick={this.addCategory}>+</button>
             </div>
             <div className="inputs">
                <label>
@@ -66,7 +100,7 @@ class Menu extends React.Component {
                   <input type="textfield" id="description"/>
                </label>
               </div>
-              <ActionButton id="savemenu" name="Save" url="" />
+              <ActionButton id="save-menu" name="Save" url="/restaurant" />
          </div>
       )
    }
