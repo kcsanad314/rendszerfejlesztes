@@ -28,7 +28,7 @@ namespace Netpincer_App_Beadando.Controllers
             _db.SaveChanges();
             return Ok();
         }
-        
+
         [HttpPost]
         public IActionResult AddFoodCategory(FoodCategory foodCategory)
         {
@@ -57,6 +57,7 @@ namespace Netpincer_App_Beadando.Controllers
             _db.SaveChanges();
             return Ok();
         }
+
         //TODO:This 2 method needs to be reorganized to another controller
         //Owner/GetRestaurants
         [HttpGet]
@@ -68,12 +69,22 @@ namespace Netpincer_App_Beadando.Controllers
         }
         //Owner/GetRestaurantFoodlist/{restaurantId}
         [HttpGet]
-        [Route("{restaurantId}")]
-        public IActionResult GetRestaurantFoodList(int restaurantId)
+        public IActionResult GetRestaurantFoodList()
         {
             //returns with a list of foodcategories and its foods of a specific restaurant
-            var result = _db.Restaurants.Where(r => r.Id == restaurantId).Include(r => r.FoodCategories).ThenInclude(fc => fc.Foods).ToList();
+            var result = _db.Restaurants.Include(r => r.FoodCategories).ThenInclude(fc => fc.Foods).ToList();
             return Ok(result);
         }
+
+        /*
+        [HttpGet]
+        [Route("{restaurantId}")]
+        public IActionResult GetRestaurantOrderList(int restaurantId)
+        {
+            //returns with a list of foodcategories and its foods of a specific restaurant
+            var result = _db.Orders.Where(o => o.RestaurantId == restaurantId).Include(o => o.Foods).ToList();
+            return Ok(result);
+        }
+        */
     }
 }
