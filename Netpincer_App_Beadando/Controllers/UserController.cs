@@ -52,7 +52,7 @@ namespace Netpincer_App_Beadando.Controllers
         [Route("{userId}")]
         public IActionResult GetUser(int userId)
         {
-            //returns with a list of foodcategories and its foods of a specific restaurant
+            
             var result = _db.Users.Find(userId);
             return Ok(result);
         }
@@ -70,7 +70,8 @@ namespace Netpincer_App_Beadando.Controllers
                 PhoneNumber = order.PhoneNumber,
                 PaymentType = order.PaymentType,
                 OrderSum = order.OrderSum,
-                RestaurantId = order.RestaurantId
+                RestaurantId = order.RestaurantId,
+                UserId = order.UserId
             };
             _order.OrderFoods = new List<OrderFood>();
             List<Food> foods = GetFoodListFromFc(order.RestaurantId, order.FoodIds);
@@ -101,6 +102,32 @@ namespace Netpincer_App_Beadando.Controllers
                 foreach (var f in fc.Foods) temp.Add(f);
             }
             return temp;
+        }
+
+        [HttpGet]
+        [Route("{userId}")]
+        public IActionResult GetUserOrders(int userId)
+        {
+            /*
+            var result = _db.OrderFood
+                .Where(of => of.UserId == userId)
+                .Select(of => of.FoodId)
+                .ToList();
+            var rests = _db.Restaurants
+                .Include(fc => fc.FoodCategories)
+                .ThenInclude(f => f.Foods.Where(food => result.Contains(food.Id)))
+                .ToList();
+            List<Food> foods = new List<Food>();
+            foreach(var r in rests)
+            {
+                foreach(var fc in r.FoodCategories)
+                {
+                    foreach (var f in fc.Foods) foods.Add(f);
+                }
+            }
+            */
+            List<Order> result = _db.Orders.Where(o => o.UserId == userId).ToList();
+            return Ok(result);
         }
     }
 }

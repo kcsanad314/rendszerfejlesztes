@@ -76,15 +76,40 @@ namespace Netpincer_App_Beadando.Controllers
             return Ok(result);
         }
 
-        /*
+        
         [HttpGet]
         [Route("{restaurantId}")]
         public IActionResult GetRestaurantOrderList(int restaurantId)
         {
-            //returns with a list of foodcategories and its foods of a specific restaurant
-            var result = _db.Orders.Where(o => o.RestaurantId == restaurantId).Include(o => o.Foods).ToList();
+            List<Order> result = _db.Orders.Where(o => o.RestaurantId == restaurantId).ToList();
+            Dictionary<Order, List<Food>> restOrders = new Dictionary<Order, List<Food>>();
+            foreach(var order in result)
+            {
+                List<Food> foods = GetListFoodForOrder(order);
+                if (foods.Count > 1) restOrders[order] = foods;
+            }
             return Ok(result);
         }
-        */
+
+        private List<Food> GetListFoodForOrder(Order order)
+        {
+            List<Food> temp = new List<Food>();
+            List<int> foodIds = new List<int>();
+            foodIds = _db.OrderFood.Where(of => of.OrderId == order.Id).Select(of => of.FoodId).ToList();
+            var rest = _db.Restaurants.Include(r => r.FoodCategories).ThenInclude(fc => fc.Foods.Where(f => foodIds.Contains(f.Id))).ToList();
+            foreach(var r in rest)
+            {
+                foreach(var fc in r.FoodCategories)
+                {
+                    foreach(var f in fc.Foods)
+                    {
+                        temp.Add(f);
+                    }
+                }
+            }
+
+            return temp;
+        }
+
     }
 }

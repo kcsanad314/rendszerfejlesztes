@@ -43,6 +43,7 @@ namespace Netpincer_App_Beadando.Models.Entity
         public int OrderSum { get; set; }
         public OrderStatus OrderStatus { get; set; }
         public int RestaurantId { get; set; }
+        public int UserId { get; set; }
         public List<OrderFood> OrderFoods { get; set; }
 
         [NotMapped]
