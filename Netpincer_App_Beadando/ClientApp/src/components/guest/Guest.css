@@ -1,21 +1,22 @@
-button {
-   width: 100px;
-   height: 40px;
-}
 
 /* SIDEBAR */
 .sidebar-guest > div {
    /* background-color: #fff; */
 }
 
-
+.guest-option {
+   position: absolute;
+   top: 0;
+   /* left: 80px; */
+}
+/* inkább ne legyen itt oldalsó gombok */
 
 /* RESTAURANT LIST */
 .restaurants {
    display: flex;
    position: absolute;
    top: 120px;
-   left: 180px;
+   left: 100px;
 }
 
 .list {
@@ -79,11 +80,11 @@ button {
 .foods {
    position: fixed;
    top: 80px;
-   left: 520px;
-   width: 370px;
+   left: 460px;
+   width: 350px;
    height: auto;
    padding: 20px 15px;
-   border: 2px solid #34568B;
+   border: 2px solid #39c6c6;
    border-radius: 8px;
 }
 
@@ -95,10 +96,26 @@ button {
 }
 
 .food {
-   margin-bottom: 10px;
+   margin: 10px 0px 10px 40px;
 }
 .food:hover {
    cursor: pointer;
+   color: #ea8b7b;
+}
+
+.food-row {
+   display: flex;
+}
+
+.food-name {
+   font-size: 18px;
+}
+.food-price {
+   position: absolute;
+   right: 60px;
+}
+.food-allergens {
+   margin-left: 20px;
 }
 
 
@@ -106,11 +123,92 @@ button {
 .cart {
    position: absolute;
    top: 30px;
-   right: -190px;
-   /* border: 2px solid green; */
+   left: 400px;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   min-width: 300px;
+   min-height: 70px;
+   padding: 15px;
+   border: 2px solid #169c7b;
+   border-radius: 8px;
 }
 
+.my-cart {
+   font-size: 22px;
+   font-weight: 600;
+   margin-bottom: 18px;
+}
+
+.toCheckout-button {
+   width: 100px;
+   height: 45px;
+   margin-top: 15px;
+   border-radius: 8px;
+   border-style: none;
+   background-color: #DFCFBE;
+   font-size: 15px;
+}
+.toCheckout-button:hover {
+   background-color: #eee6dd;
+   cursor: pointer;
+}
+
+/*    CART-ITEM    */
+.item {
+   display: flex;
+   margin-bottom: 10px;
+   font-size: 17px;
+}
 .item > button {
    width: 30px;
    height: 30px;
+}
+.item > div {
+   margin-left: 10px;
+}
+
+.item-buttons {
+   display: flex;
+}
+.item-buttons > button {
+   width: 25px;
+   height: 25px;
+   border-radius: 15px;
+   border: 1px solid black;
+   background-color: #DFCFBE;
+}
+.toCheckout-button:hover, .item-buttons > button:hover {
+   background-color: #eee6dd;
+   cursor: pointer;
+}
+.item-piece {
+   margin: 0px 5px;
+}
+
+
+/*   CHECKOUT    */
+.quick-form {
+   position: absolute;
+   top: 120px;
+   left: 50%;
+   transform: translateX(-50%);
+}
+
+.qf-inputs {
+   width: 500px;
+}
+
+#order {
+   width: 100px;
+   height: 40px;
+   margin-top: 15px;
+   margin-left: 50%;
+   border-radius: 8px;
+   border-style: none;
+   background-color: #DFCFBE;
+}
+#order:hover {
+   background-color: #eee6dd;
+   cursor: pointer;
 }

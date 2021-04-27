@@ -82,7 +82,8 @@ namespace Netpincer_App_Beadando.Controllers
                     FoodId = food.Id,
                     OrderId = _order.Id,
                     Order = _order,
-                    Food = food
+                    Food = food,
+                    UserId = _order.UserId
                 };
                 _order.OrderFoods.Add(of);
             }

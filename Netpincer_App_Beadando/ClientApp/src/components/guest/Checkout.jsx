@@ -1,57 +1,72 @@
 import React from 'react'
-import CartItem from './CartItem'
+import { Redirect } from 'react-router'
 
 class Checkout extends React.Component {
 
+   constructor(){
+      super();
+      this.state = {
+         redirect: false
+      }
+      this.sendOrder = this.sendOrder.bind(this);
+   }
+
    sendOrder(){
-      const data = localStorage.getItem("cartData");
+      let date = new Date();
       const amount = localStorage.getItem("amount");
       const id = localStorage.getItem("restaurantId");
-      const name = document.getElementById("lastname").value + " " + document.getElementById("firstname").value;
+      const ids = JSON.parse(localStorage.getItem("foodIds"));
+      const firstName = document.getElementById("firstname").value;
+      const lastName = document.getElementById("lastname").value;
       const city = document.getElementById("city").value;
       const street = document.getElementById("street").value;
       const phone = document.getElementById("phone").value;
 
+
       const datas = {
-          "Timestamp" : "2021.04.25 13: 21",
-          "FirstName": "valami",
-          "LastName": "valamiii",
-          "City": "Budapest",
-          "Street:": "fasz utca 1",
-          "PhoneNumber": "1234567",
-          "PaymentType": "asdasdasdasd",
-          "OrderSum": "4333321",
+          "Timestamp" : date,
+          "FirstName": firstName,
+          "LastName": lastName,
+          "City": city,
+          "Street:": street,
+          "PhoneNumber": phone,
+          "PaymentType": "Bankkártya",
+          "OrderSum": amount,
           "OrderStatus": "0",
-          "FoodIds":[3,4],
-          "RestaurantId": 1,
+          "FoodIds": ids,
+          "RestaurantId": id,
        }
        const request = new XMLHttpRequest();
        const url = "https://localhost:44329/api/User/CreateOrder";
        request.open("POST", url);
        /*request.onload = () => {
-           
        }*/
        request.setRequestHeader("Content-Type", "application/json");
        request.send(JSON.stringify(datas));
-      console.log(datas);
+      // console.log(ids);
+      alert('Thank you for your order!');
+      this.setState({redirect: true});
    }
 
-   displayCart(){
-      return (
-         <div>
-            ITT lesz a kosár
-         </div>
-      )
+   displayCartItems(){
+      const items = [];
+      const names = JSON.parse(localStorage.getItem("foodNames"));
+      const prices = JSON.parse(localStorage.getItem("foodPrice"));
+
+      for(let i = 0; i < names.length; i++){
+         items.push(<DisplayCart foodName={names[i]} foodPrice={prices[i]} />);
+      }
+      return items;
    }
 
    render(){
+      // {this.displayCartItems()}
+      if(this.state.redirect)
+         return <Redirect to="/" />
       return (
          <div>
-            {this.displayCart()}
-            whent the magic starts to bleed
-
             <form className="quick-form">
-               <div className="inputs">
+               <div className="inputs qf-inputs">
                   <label>
                      First name:
                      <input type="text" id="firstname"/>
@@ -73,11 +88,22 @@ class Checkout extends React.Component {
                      <input type="text" id="phone"/>
                   </label>
                </div>
+               <button id="order" onClick={() => this.sendOrder()}>Order</button>
             </form>
-            <button id="order" onClick={() => this.sendOrder()}>Order</button>
          </div>
       )
    }
 }
+
+function DisplayCart(props){
+   return (
+      <div className="item">
+         <div className="item-name">{props.foodName}</div>
+         <div className="item-piece"></div>
+         <div className="price">{props.foodPrice} Ft</div>
+      </div>
+   )
+}
+
 
 export default Checkout

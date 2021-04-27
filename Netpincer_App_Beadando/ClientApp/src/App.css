@@ -71,10 +71,10 @@
     padding: 0 40px 0 20px;
 }
 
-    .bonus-inputs > label > input[type] {
-        margin-right: 65px;
-        margin-left: 20px;
-    }
+.bonus-inputs > label > input[type] {
+  margin-right: 65px;
+  margin-left: 20px;
+}
 
 input[type], select {
     width: 180px;
@@ -105,10 +105,10 @@ input[type=number] {
     font-size: 17px;
 }
 
-    .action-buttons:hover {
-        box-shadow: 3px 4px 9px -3px #fff;
-        cursor: pointer;
-    }
+.action-buttons:hover {
+  box-shadow: 3px 4px 9px -3px #fff;
+  cursor: pointer;
+}
 
 #login {
     margin-right: 10px;
@@ -129,6 +129,17 @@ input[type=number] {
     background-color: #78edad;
     font-size: 19px;
 }
+
+.quick-order {
+   margin: 15px;
+   font-size: 19px;
+   font-style: italic;
+   text-decoration: underline;
+}
+.quick-order:hover {
+   cursor: pointer;
+}
+
 /*
 .signup-button {
    background-color: red;
@@ -237,8 +248,8 @@ input[type=number] {
     cursor: pointer;
 }
 
-    .sidebarButton:hover {
-        transition: 0.2s ease;
-        margin-left: 10px;
-        background-color: rgb(156, 226, 191, 0.2);
-    }
+.sidebarButton:hover {
+  transition: 0.2s ease;
+  margin-left: 10px;
+  background-color: rgb(156, 226, 191, 0.2);
+}
