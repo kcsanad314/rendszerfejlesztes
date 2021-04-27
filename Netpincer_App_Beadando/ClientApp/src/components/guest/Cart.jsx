@@ -12,17 +12,28 @@ class Cart extends React.Component {
    }
 
    componentDidMount(){
-      localStorage.clear();
+      localStorage.removeItem("amount");
+      localStorage.removeItem("cartData");
+      localStorage.removeItem("restaurantId");
    }
 
    toCheckout(move){
       let sum = 0;
-      for(let item of this.props.items)
-         sum += item[1];
+      let ids = [], names = [], price = [];
 
+      for(let item of this.props.items){
+         sum += item[1];
+         names.push(item[0])
+         price.push(item[1])
+         ids.push(item[2]);
+      }
+
+      // localStorage.setItem("cartData", JSON.stringify(this.props.items));
       localStorage.setItem("amount", sum);
-      localStorage.setItem("cartData", this.props.items);
       localStorage.setItem("restaurantId", this.props.id);
+      localStorage.setItem("foodNames", JSON.stringify(names));
+      localStorage.setItem("foodPrice", JSON.stringify(price));
+      localStorage.setItem("foodIds", JSON.stringify(ids));
 
       this.setState({redirect: true});
    }
@@ -38,12 +49,13 @@ class Cart extends React.Component {
    }
 
    render(){
-      console.log(this.props.id);
+      // console.log(this.props.id);
       if(this.state.redirect)
          return <Redirect to="/checkout" />
 
       return (
          <div className="cart">
+            <label className="my-cart">My Cart</label>
             {this.rendering()}
             <button className="toCheckout-button" onClick={() => {this.toCheckout()}}>Proceed to checkout</button>
          </div>

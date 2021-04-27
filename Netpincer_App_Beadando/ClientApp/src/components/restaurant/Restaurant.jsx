@@ -34,25 +34,25 @@ class Restaurant extends React.Component {
             // console.log(this.state.avatar)
          });
        }
-       /*const request = new XMLHttpRequest();
+       const request = new XMLHttpRequest();
        const url = "https://localhost:44329/api/Owner/GetRestaurantFoodList/1";
        request.open("GET", url);
        //request.setRequestHeader("Content-Type", "application/json");
        request.onload = () => {
-           console.log(request.responseText);
+           // console.log(request.responseText);
            const type = JSON.parse(request.responseText);
            var food_cat = [];
-           console.log(type);
-           console.log(type[0].foodCategories);
+           // console.log(type);
+           // console.log(type[0].foodCategories);
            for (let category of type[0].foodCategories) {
-               console.log(category.name);
+               // console.log(category.name);
                food_cat.push(category);
            }
            this.setState({
                foods: food_cat
            })
        }
-       request.send();*/
+       request.send();
     }
 
     rendering() {
@@ -68,7 +68,7 @@ class Restaurant extends React.Component {
       if(this.state.id === 2)
          return (<Menu categories="kecske" />)
       if (this.state.id === 3)
-         return (<div className="list-foods">{food_arr}</div>)
+         return (<div className="list-foods"></div>)
       if(this.state.id === 4)
          return (<ManageOrders />)
    }
@@ -94,17 +94,17 @@ export default Restaurant
 
 const jsonFoods = [
    {
-      "name": "Italok",
+      "name": "",
       "foods": [
          {
-            "name": "Ruszki",
-            "price": "1400",
-            "allergens": "alkohol"
+            "name": "",
+            "price": "",
+            "allergens": ""
          },
          {
-            "name": "Ruszki",
-            "price": "1400",
-            "allergens": "alkohol"
+            "name": "",
+            "price": "",
+            "allergens": ""
          }
       ]
    }

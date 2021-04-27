@@ -1,5 +1,6 @@
 import React from 'react'
 import ActionButton from './ActionButton'
+import { Redirect } from 'react-router'
 
 /*
  * 1.) Bejelentkez�s
@@ -13,11 +14,14 @@ class LogInForm extends React.Component {
     constructor() {
         super();
         this.state = {
-            link: ''
+            redirect: false,
+            link: ""
         };
+        this.orderButton = this.orderButton.bind(this);
     }
-    /*
+
     componentDidMount() {
+       localStorage.clear();
         document.getElementById("login").addEventListener("click", () => {
             const request = new XMLHttpRequest();
 
@@ -37,41 +41,61 @@ class LogInForm extends React.Component {
                     switch (type.item1) {
                         case 1:
                             this.setState({
-                                link: '/restaurant'
+                                redirect: true,
+                                link: 'restaurant'
                             });
                             break;
                         case 2:
-                            //Majd a fut�rhoz vigyen
                             this.setState({
-                                link: '/restaurant'
+                                redirect: true,
+                                link: 'courier'
                             });
                             break;
                         default:
                             this.setState({
-                                link: '/guest'
+                                redirect: true,
+                                link: 'guest'
                             });
                     }
                 }
                 else {
-                    alert("Nem j�");
+                    alert("Nem jo");
                 }
+                //userId = ha ide beadod a bejelentkezett id-t elvileg menni fog a login teljesen
+                // localStorage.setItem("userId", userId);
             }
             request.send(JSON.stringify(body));
         });
     }
-    */
+
+
+   orderButton(){
+      this.setState({
+         redirect: true,
+         link: 'order'
+      });
+   }
+
    render(){
+      const link = "/" + this.state.link;
+      if(this.state.redirect)
+         return <Redirect to={link} />
+
+
       return (
-         <form className="login-form">
-            Username:
-            <input type="text" id="username"/>
-            Password:
-            <input type="password" id="password"/>
-            <div className="buttons">
-               <ActionButton id="login" name="Log In" url={this.state.link }/>
-               <ActionButton id="signup" name="Sign Up" url="/signup"/>
-            </div>
-         </form>
+         <div>
+            <div className="quick-order" onClick={this.orderButton}>Order without login</div>
+            <form className="login-form">
+               Username:
+               <input type="text" id="username"/>
+               Password:
+               <input type="password" id="password"/>
+               <div className="buttons">
+                  <ActionButton id="login" name="Log In" url={this.state.link }/>
+                  <ActionButton id="signup" name="Sign Up" url="/signup"/>
+               </div>
+            </form>
+         </div>
       )
     }
 

@@ -43,7 +43,9 @@ class Guest extends React.Component {
                <div id="2" className="sidebarButton"></div>
                <div id="3" className="sidebarButton"></div>
             </div>
-            {this.rendering()}           
+            <div className="guest-option">
+               {this.rendering()}
+            </div>
          </div>
       )
    }

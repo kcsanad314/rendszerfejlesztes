@@ -11,8 +11,8 @@ class ListFoods extends React.Component {
       this.handleClick = this.handleClick.bind(this);
    }
 
-   handleClick(name, price){
-      const tuple = [name, price];
+   handleClick(name, price, id){
+      const tuple = [name, price, id];
       this.setState(prevState => {
          return {
             items: [...prevState.items, tuple]
@@ -28,6 +28,7 @@ class ListFoods extends React.Component {
          cat = true;
          for (let food of category.foods) {
             foods.push(<Food key={i}
+               id={i+1}
                name={food.name}
                price={food.price}
                allergenes={food.allergenes}
@@ -38,7 +39,7 @@ class ListFoods extends React.Component {
             cat = false;
          }
       }
-   
+
       return (
           <div className="foods">
               {foods}
@@ -57,15 +58,17 @@ function Food(props) {
             <div className="category">
                 {props.categoryName}
             </div>
-           <div className="food" onClick={() => props.addToCart(props.name, props.price)}>
-               <div className="food-name">
-                   {props.name}
-               </div>
-               <div className="food-price">
-                   {props.price}
+           <div className="food" onClick={() => props.addToCart(props.name, props.price, props.id)}>
+               <div className="food-row">
+                  <div className="food-name">
+                      {props.name}
+                  </div>
+                  <div className="food-price">
+                      {props.price} Ft
+                  </div>
                </div>
                <div className="food-allergens">
-                   {props.allergens}
+                   {props.allergenes}
                </div>
            </div>
          </div>

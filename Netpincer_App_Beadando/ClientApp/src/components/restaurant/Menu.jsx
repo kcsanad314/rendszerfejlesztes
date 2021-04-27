@@ -20,7 +20,7 @@ class Menu extends React.Component {
                 }
             }
             const url = "https://localhost:44329/api/Owner/AddFoodCategory";
-            const category = document.getElementById("category").value;
+            const category = document.getElementById("category-list").value;
             const foodname = document.getElementById("foodname").value;
             const price = document.getElementById("price").value;
             const allergens = document.getElementById("allergens").value;
@@ -72,7 +72,7 @@ class Menu extends React.Component {
    }
 
    render(){
-      //console.log(this.state.category)
+      // console.log(document.getElementById("category-list").value);
       return (
          <div className="menu">
             <div className="category">

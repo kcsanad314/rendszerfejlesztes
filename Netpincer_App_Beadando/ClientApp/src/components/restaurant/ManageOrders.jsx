@@ -10,13 +10,14 @@ class ManageOrders extends React.Component {
    }
 
     componentDidMount() {
+        //const restId = localStorage.getItem("userId");
         const restId = 1;
         const request = new XMLHttpRequest();
         let url = "https://localhost:44329/api/Owner/GetRestaurantOrderList/" + restId;
-        
+
         request.open("GET", url);
         request.onload = () => {
-            console.log(request.responseText);
+            // console.log(request.responseText);
             const data = JSON.parse(request.responseText);
             let order_arr = [];
             for (let order of data)
@@ -24,19 +25,17 @@ class ManageOrders extends React.Component {
                 order_arr.push(order);
                 //console.log(order);
             }
-            console.log(order_arr);
+            // console.log(order_arr);
             this.setState({ orders: order_arr });
         }
         request.send();
-
    }
 
    render(){
       const orders = [];
-       for (let i = 0; i < this.state.orders.length; i++) {
-          console.log(this.state.orders[i]);
-           orders.push(<Order data = { this.state.orders[i]}/>);
-       }
+      for (let i = 0; i < this.state.orders.length; i++) {
+         orders.push(<Order key={i} data={this.state.orders[i]} />);
+      }
       return (
          <div className="orders">
             {orders}
@@ -47,191 +46,70 @@ class ManageOrders extends React.Component {
 
 class Order extends React.Component {
 
+   constructor(props){
+      super(props);
+      this.state = {
+         value: this.props.data.orderStatus
+      }
+      this.handleChange = this.handleChange.bind(this);
+   }
+
+   handleChange(event){
+      this.setState({ value: event.target.value });
+   }
+
    render(){
-      return (
-          <div className="order">       
-            <div className="datas">
-                  {
-                      this.props.data.timestamp,
-                      this.props.data.firstName
-                  }
+      if(this.state.value !== 3){
+         return (
+             <div className="order">
+               <div className="datas">
+                  <div className="timestamp">{this.props.data.timestamp}</div>
+                  <div className="order-name">{this.props.data.firstName + " " + this.props.data.lastName}</div>
+                  <div className="order-city">{this.props.data.city},</div>
+                  <div className="order-street">{this.props.data.street}</div>
+                  <div className="order-phone">{this.props.data.phoneNumber}</div>
+                  <div className="paymentType">{this.props.data.paymentType}</div>
+                  <div className="order-foods"></div>
+               </div>
+               <div className="functions">
+                  <select id="order-status" value={this.state.value} onChange={this.handleChange}>
+                     <option value="0">New</option>
+                     <option value="1">In Progress</option>
+                     <option value="2">Delivering</option>
+                     <option value="3">Done</option>
+                     <option value="4">Cancelled</option>
+                  </select>
+                  <button id="changeStatus" onClick={()=>{alert("Saved successfully!")}}>Save</button>
+               </div>
             </div>
-            <select id="order-status">
-               <option value="">New</option>
-               <option value="">In Progress</option>
-               <option value="">Transport</option>
-               <option value="">Decline</option>
-            </select>
-            <button id="changeStatus">Save</button>
-         </div>
-      )
+         )
+      }
+      else
+         return (<div></div>)
    }
 }
 
+export default ManageOrders
 
 /*
- * OrderStatus ->
- *  0 -> New
- *  1 -> InProgress
- *  2 -> Delivering
- *  3 -> Done
- *  4 -> Cancelled
- * /
+  OrderStatus ->
+   0 -> New
+   1 -> InProgress
+  2 -> Delivering
+  3 -> Done
+  4 -> Cancelled
+*/
 const json = [
     {
-        "id": 1,
-        "timestamp": "2021-04-24T00:00:00",
-        "firstName": "FirstName",
-        "lastName": "LastName",
-        "city": "Budapest",
-        "street": "Valami street 29",
-        "phoneNumber": "06301234567",
-        "paymentType": "Csak a kártya",
+        "id": "",
+        "timestamp": "",
+        "firstName": "",
+        "lastName": "",
+        "city": "",
+        "street": "",
+        "phoneNumber": "",
+        "paymentType": "",
         "orderSum": 20000,
-        "orderStatus": 0,
-        "restaurantId": 1,
-        "userId": 0,
-        "orderFoods": null,
-        "foodIds": null
-    },
-    {
-        "id": 7,
-        "timestamp": "2021-04-25T13:21:00",
-        "firstName": "FirstName",
-        "lastName": "LastName",
-        "city": "Budapest",
-        "street": null,
-        "phoneNumber": "06301234567",
-        "paymentType": "Bankkártya",
-        "orderSum": 7000,
-        "orderStatus": 0,
-        "restaurantId": 1,
-        "userId": 0,
-        "orderFoods": null,
-        "foodIds": null
-    },
-    {
-        "id": 8,
-        "timestamp": "2021-04-25T13:21:00",
-        "firstName": "FirstName",
-        "lastName": "LastName",
-        "city": "Budapest",
-        "street": null,
-        "phoneNumber": "06301234567",
-        "paymentType": "Bankkártya",
-        "orderSum": 7000,
-        "orderStatus": 0,
-        "restaurantId": 1,
-        "userId": 0,
-        "orderFoods": null,
-        "foodIds": null
-    },
-    {
-        "id": 9,
-        "timestamp": "2021-04-25T13:21:00",
-        "firstName": "FirstName",
-        "lastName": "LastName",
-        "city": "Budapest",
-        "street": null,
-        "phoneNumber": "06301234567",
-        "paymentType": "Bankkártya",
-        "orderSum": 7000,
-        "orderStatus": 0,
-        "restaurantId": 1,
-        "userId": 0,
-        "orderFoods": null,
-        "foodIds": null
-    },
-    {
-        "id": 10,
-        "timestamp": "2021-04-25T13:21:00",
-        "firstName": "FirstName",
-        "lastName": "LastName",
-        "city": "Budapest",
-        "street": null,
-        "phoneNumber": "06301234567",
-        "paymentType": "Bankkártya",
-        "orderSum": 7000,
-        "orderStatus": 0,
-        "restaurantId": 1,
-        "userId": 0,
-        "orderFoods": null,
-        "foodIds": null
-    },
-    {
-        "id": 11,
-        "timestamp": "2021-04-25T13:21:00",
-        "firstName": "FirstName",
-        "lastName": "LastName",
-        "city": "Budapest",
-        "street": null,
-        "phoneNumber": "06301234567",
-        "paymentType": "Bankkártya",
-        "orderSum": 7000,
-        "orderStatus": 0,
-        "restaurantId": 1,
-        "userId": 0,
-        "orderFoods": null,
-        "foodIds": null
-    },
-    {
-        "id": 12,
-        "timestamp": "2021-04-25T13:21:00",
-        "firstName": "FirstName",
-        "lastName": "LastName",
-        "city": "Budapest",
-        "street": null,
-        "phoneNumber": "06301234567",
-        "paymentType": "Bankkártya",
-        "orderSum": 7000,
-        "orderStatus": 0,
-        "restaurantId": 1,
-        "userId": 0,
-        "orderFoods": null,
-        "foodIds": null
-    },
-    {
-        "id": 15,
-        "timestamp": "2021-04-25T13:21:00",
-        "firstName": "FirstName",
-        "lastName": "LastName",
-        "city": "Budapest",
-        "street": null,
-        "phoneNumber": "06301234567",
-        "paymentType": "Bankkártya",
-        "orderSum": 7000,
-        "orderStatus": 0,
-        "restaurantId": 1,
-        "userId": 0,
-        "orderFoods": null,
-        "foodIds": null
-    },
-    {
-        "id": 16,
-        "timestamp": "2021-04-25T13:21:00",
-        "firstName": "valami",
-        "lastName": "valamiii",
-        "city": "Budapest",
-        "street": null,
-        "phoneNumber": "06301234567",
-        "paymentType": "Bankkártya",
-        "orderSum": 20000,
-        "orderStatus": 0,
-        "restaurantId": 1,
-        "userId": 0,
-        "orderFoods": null,
-        "foodIds": null
-    },
-    {
-        "id": 17,
-        "timestamp": "2021-04-25T13:21:00",
-        "firstName": "valami",
-        "lastName": "valamiii",
-        "city": "Budapest",
-        "street": null,
-        "phoneNumber": "1234567",
-        "paymentType": "asdasdasdasd",
-        "orderSum": 4333321,
         "orderStatus": 0,
         "restaurantId": 1,
         "userId": 0,
@@ -239,5 +117,3 @@ const json = [
         "foodIds": null
     }
 ]
-
-export default ManageOrders

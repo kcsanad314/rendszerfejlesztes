@@ -93,3 +93,42 @@ font-size: 18px;
    margin-left: -30px;
    font-size: 19px;
 }
+
+
+
+/*    MANAGE ORDERS    */
+.order {
+   display: flex;
+   padding: 30px 30px;
+   border-bottom: 1px solid white;
+}
+
+.datas {
+   margin-right: 50px;
+}
+
+.datas > div {
+   margin-bottom: 6px;
+}
+
+.functions {
+   display: flex;
+   flex-direction: column;
+   margin-left: 10px;
+}
+
+#order-status {
+   width: 170px;
+}
+
+#changeStatus {
+   width: 90px;
+   height: 35px;
+   margin-left: 40px;
+   border: 1px solid black;
+   border-radius: 4px;
+   font-size: 16px;
+}
+#changeStatus:hover {
+   cursor: pointer;
+}

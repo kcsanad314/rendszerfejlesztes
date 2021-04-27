@@ -57,7 +57,14 @@ namespace Netpincer_App_Beadando.Controllers
             _db.SaveChanges();
             return Ok();
         }
-
+        [HttpGet]
+        [Route("{userId}")]
+        public IActionResult GetRestaurantByUserId(int userId)
+        {
+            //returns with a list of all the restaurants
+            var result = _db.Restaurants.Where(r => r.UserId == userId).ToList();
+            return Ok(result);
+        }
         //TODO:This 2 method needs to be reorganized to another controller
         //Owner/GetRestaurants
         [HttpGet]
@@ -82,20 +89,16 @@ namespace Netpincer_App_Beadando.Controllers
         public IActionResult GetRestaurantOrderList(int restaurantId)
         {
             List<Order> result = _db.Orders.Where(o => o.RestaurantId == restaurantId).ToList();
-            Dictionary<Order, List<Food>> restOrders = new Dictionary<Order, List<Food>>();
-            foreach(var order in result)
-            {
-                List<Food> foods = GetListFoodForOrder(order);
-                if (foods.Count > 1) restOrders[order] = foods;
-            }
             return Ok(result);
         }
 
-        private List<Food> GetListFoodForOrder(Order order)
+        [HttpGet]
+        [Route("{orderId}")]
+        public IActionResult GetListFoodForOrder(int orderId)
         {
             List<Food> temp = new List<Food>();
             List<int> foodIds = new List<int>();
-            foodIds = _db.OrderFood.Where(of => of.OrderId == order.Id).Select(of => of.FoodId).ToList();
+            foodIds = _db.OrderFood.Where(of => of.OrderId == orderId).Select(of => of.FoodId).ToList();
             var rest = _db.Restaurants.Include(r => r.FoodCategories).ThenInclude(fc => fc.Foods.Where(f => foodIds.Contains(f.Id))).ToList();
             foreach(var r in rest)
             {
@@ -107,8 +110,7 @@ namespace Netpincer_App_Beadando.Controllers
                     }
                 }
             }
-
-            return temp;
+            return Ok(temp);
         }
 
     }

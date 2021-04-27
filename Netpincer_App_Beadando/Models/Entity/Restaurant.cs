@@ -26,6 +26,7 @@ namespace Netpincer_App_Beadando.Models.Entity
         [MaxLength(1000, ErrorMessage = "A(z) {0} maximum {1} karakter lehet.")]
         [Display(Name = "Étterem neve", AutoGenerateFilter = false, AutoGenerateField = false, Order = 0)]
         public string Description { get; set; }
+        public int UserId { get; set; }
         public List<FoodCategory> FoodCategories { get; set; }
     }
 
