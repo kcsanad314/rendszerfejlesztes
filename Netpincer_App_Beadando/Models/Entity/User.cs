@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Netpincer_App_Beadando.Models
+namespace Netpincer_App_Beadando.Models.Entity
 {
     public enum UserType
     {
@@ -15,7 +15,7 @@ namespace Netpincer_App_Beadando.Models
     public class User
     {
         [Key]
-        public int Id { get; set; }
+        public int UserId { get; set; }
         [Required(ErrorMessage = "Kötelező a(z) {0} mezőt kitölteni!")]
         [MaxLength(255, ErrorMessage = "A(z) {0} maximum {1} karakter lehet.")]
         [Display(Name = "Felhasználó név", AutoGenerateFilter = false, AutoGenerateField = false, Order = 0)]
@@ -58,6 +58,7 @@ namespace Netpincer_App_Beadando.Models
         [Display(Name = "Ajtószám", AutoGenerateFilter = false, AutoGenerateField = false, Order = 0)]
         public string DoorNumber { get; set; }
         public UserType Type { get; set; }
+        public Availability Availability { get; set; }
     }
 
     public class LoginUser

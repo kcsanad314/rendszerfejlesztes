@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Netpincer_App_Beadando.Models;
 
 namespace Netpincer_App_Beadando.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210425115150_new_migr")]
+    partial class new_migr
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -48,12 +50,17 @@ namespace Netpincer_App_Beadando.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("OrderId")
+                        .HasColumnType("int");
+
                     b.Property<int>("Price")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("FoodId");
+
+                    b.HasIndex("OrderId");
 
                     b.ToTable("Food");
                 });
@@ -124,37 +131,9 @@ namespace Netpincer_App_Beadando.Migrations
                     b.Property<DateTime>("Timestamp")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.ToTable("Orders");
-                });
-
-            modelBuilder.Entity("Netpincer_App_Beadando.Models.Entity.OrderFood", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("FoodId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("OrderId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("FoodId");
-
-                    b.HasIndex("OrderId");
-
-                    b.ToTable("OrderFood");
                 });
 
             modelBuilder.Entity("Netpincer_App_Beadando.Models.Entity.Restaurant", b =>
@@ -184,9 +163,6 @@ namespace Netpincer_App_Beadando.Migrations
                     b.Property<string>("Street")
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -275,7 +251,15 @@ namespace Netpincer_App_Beadando.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Netpincer_App_Beadando.Models.Entity.Order", "Order")
+                        .WithMany("Foods")
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("FoodCategory");
+
+                    b.Navigation("Order");
                 });
 
             modelBuilder.Entity("Netpincer_App_Beadando.Models.Entity.FoodCategory", b =>
@@ -289,30 +273,6 @@ namespace Netpincer_App_Beadando.Migrations
                     b.Navigation("Restaurant");
                 });
 
-            modelBuilder.Entity("Netpincer_App_Beadando.Models.Entity.OrderFood", b =>
-                {
-                    b.HasOne("Netpincer_App_Beadando.Models.Entity.Food", "Food")
-                        .WithMany("OrderFoods")
-                        .HasForeignKey("FoodId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Netpincer_App_Beadando.Models.Entity.Order", "Order")
-                        .WithMany("OrderFoods")
-                        .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Food");
-
-                    b.Navigation("Order");
-                });
-
-            modelBuilder.Entity("Netpincer_App_Beadando.Models.Entity.Food", b =>
-                {
-                    b.Navigation("OrderFoods");
-                });
-
             modelBuilder.Entity("Netpincer_App_Beadando.Models.Entity.FoodCategory", b =>
                 {
                     b.Navigation("Foods");
@@ -320,7 +280,7 @@ namespace Netpincer_App_Beadando.Migrations
 
             modelBuilder.Entity("Netpincer_App_Beadando.Models.Entity.Order", b =>
                 {
-                    b.Navigation("OrderFoods");
+                    b.Navigation("Foods");
                 });
 
             modelBuilder.Entity("Netpincer_App_Beadando.Models.Entity.Restaurant", b =>

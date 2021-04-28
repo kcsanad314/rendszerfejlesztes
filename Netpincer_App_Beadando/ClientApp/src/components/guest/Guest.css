@@ -1,4 +1,214 @@
-button {
+
+/* SIDEBAR */
+.sidebar-guest > div {
+   /* background-color: #fff; */
+}
+
+.guest-option {
+   position: absolute;
+   top: 0;
+   /* left: 80px; */
+}
+/* inkább ne legyen itt oldalsó gombok */
+
+/* RESTAURANT LIST */
+.restaurants {
+   display: flex;
+   position: absolute;
+   top: 120px;
+   left: 100px;
+}
+
+.list {
+   /* position: absolute;
+   left: 90px; */
+}
+
+.container {
+   display: flex;
+}
+.container:hover { cursor: auto;}
+
+.list-button {
+   position: relative;
+   left: -50px;
+   width: 50px;
+   /* height: ; */
+   border-radius: 8px;
+   background-color: #ea8b7b;
+   opacity: 0.6;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   color: #202020;
+}
+.list-button:hover { cursor: pointer; }
+.list-button > img {
+   width: 35px;
+   transform: rotate(90deg);
+}
+.list-button:hover > img {
+   transition: 0.3s ease;
+   transform: rotate(0deg);
+}
+
+.restaurant-card {
+   width: 300px;
+   padding: 10px;
+   border: 2px solid #e3654f;
+   border-radius: 8px;
+}
+.name {
+   font-size: 22px;
+}
+.city {
+   font-size: 20px;
+}
+.description {
+   width: 200px;
+   margin-top: 10px;
+}
+
+.restaurant-card > div {
+   margin-bottom: 5px;
+}
+.city, .address, .description {
+   padding-left: 5px;
+}
+
+/* LIST-FOODS */
+.foods {
+   position: fixed;
+   top: 80px;
+   left: 460px;
+   width: 350px;
+   height: auto;
+   padding: 20px 15px;
+   border: 2px solid #39c6c6;
+   border-radius: 8px;
+}
+
+.category {
+   display: flex;
+   justify-content: center;
+   margin-left: 5px;
+   font-size: 21px;
+}
+
+.food {
+   margin: 10px 0px 10px 40px;
+}
+.food:hover {
+   cursor: pointer;
+   color: #ea8b7b;
+}
+
+.food-row {
+   display: flex;
+}
+
+.food-name {
+   font-size: 18px;
+}
+.food-price {
+   position: absolute;
+   right: 60px;
+}
+.food-allergens {
+   margin-left: 20px;
+}
+
+
+/*    CART    */
+.cart {
+   position: absolute;
+   top: 30px;
+   left: 400px;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   min-width: 300px;
+   min-height: 70px;
+   padding: 15px;
+   border: 2px solid #169c7b;
+   border-radius: 8px;
+}
+
+.my-cart {
+   font-size: 22px;
+   font-weight: 600;
+   margin-bottom: 18px;
+}
+
+.toCheckout-button {
+   width: 100px;
+   height: 45px;
+   margin-top: 15px;
+   border-radius: 8px;
+   border-style: none;
+   background-color: #DFCFBE;
+   font-size: 15px;
+}
+.toCheckout-button:hover {
+   background-color: #eee6dd;
+   cursor: pointer;
+}
+
+/*    CART-ITEM    */
+.item {
+   display: flex;
+   margin-bottom: 10px;
+   font-size: 17px;
+}
+.item > button {
+   width: 30px;
+   height: 30px;
+}
+.item > div {
+   margin-left: 10px;
+}
+
+.item-buttons {
+   display: flex;
+}
+.item-buttons > button {
+   width: 25px;
+   height: 25px;
+   border-radius: 15px;
+   border: 1px solid black;
+   background-color: #DFCFBE;
+}
+.toCheckout-button:hover, .item-buttons > button:hover {
+   background-color: #eee6dd;
+   cursor: pointer;
+}
+.item-piece {
+   margin: 0px 5px;
+}
+
+
+/*   CHECKOUT    */
+.quick-form {
+   position: absolute;
+   top: 120px;
+   left: 50%;
+   transform: translateX(-50%);
+}
+
+.qf-inputs {
+   width: 500px;
+}
+
+#order {
    width: 100px;
    height: 40px;
+   margin-top: 15px;
+   margin-left: 50%;
+   border-radius: 8px;
+   border-style: none;
+   background-color: #DFCFBE;
+}
+#order:hover {
+   background-color: #eee6dd;
+   cursor: pointer;
 }

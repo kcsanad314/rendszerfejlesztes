@@ -2,30 +2,26 @@
 
 function RestaurantsList(props) {
     return (
-        <div className="restaurant">
-            <div className="Name">
-                {
-                    props.name
-                }
+      <div className="container">
+        <div className="restaurant-card">
+            <div className="name">
+                {props.name}
             </div>
-            <div className="City">
-                {
-                    props.city
-                }
+            <div className="city">
+                {props.city},
             </div>
-            <div className="Address">
-                {
-                    props.address
-                }
+            <div className="address">
+                {props.address}
             </div>
-            <div className="Description">
-                {
-                    props.description
-                }
+            <div className="description">
+                {props.description}
             </div>
         </div>
+        <div className="list-button" onClick={() => props.handleClick(props.id)}>
+           <img src="icons/arrow.png" alt=""/>
+        </div>
+      </div>
     )
 }
-
 
 export default RestaurantsList

@@ -1,7 +1,7 @@
 import React from 'react'
 import ActionButton from './ActionButton'
 
-class SignInForm extends React.Component {
+class SignUpForm extends React.Component {
 
    constructor(){
       super();
@@ -25,13 +25,13 @@ class SignInForm extends React.Component {
                   container[j].classList.remove("container-active");
             }
             // console.log(this.state.avatar)
-
          });
-       }
-       document.getElementById("signin-action").addEventListener("click", () => {
+      }
+      /*
+      document.getElementById("signin-action").addEventListener("click", () => {
            const request = new XMLHttpRequest();
            const url = "https://localhost:44329/api/User/Create";
-           
+
            let type = 0;
            switch (this.state.avatar) {
                case "guest": type = 0;
@@ -40,7 +40,7 @@ class SignInForm extends React.Component {
                    break;
                default: type = 2;
            }
-           
+
            const firstName = document.getElementById("firstname").value;
            const lastName = document.getElementById("lastname").value;
            const userName = document.getElementById("username").value;
@@ -58,7 +58,8 @@ class SignInForm extends React.Component {
            request.open("POST", url);
            request.setRequestHeader("Content-Type", "application/json");
            request.send(JSON.stringify(body));
-       })
+       });
+       */
    }
 
    icon(name){
@@ -83,36 +84,36 @@ class SignInForm extends React.Component {
       )
    }
 
-   signInForm(){
+   signUpForm(){
       return (
-         <form className="signin-form">
+         <form className="signup-form">
             <div className="inputs">
                <label>
                   First name:
                   <input type="text" id="firstname"/>
                </label>
                <label>
-                      Last name:
+                  Last name:
                   <input type="text" id="lastname"/>
                </label>
                <label>
-                      Username:
+                  Username:
                   <input type="text" id="username"/>
                </label>
                <label>
-                      Password:
+                  Password:
                   <input type="password" id="password"/>
                </label>
                <label>
-                      Password again:
+                  Password again:
                   <input type="password" id="password-again"/>
                </label>
                <label>
-                      E-mail:
+                  E-mail:
                   <input type="text" id="email"/>
                </label>
             </div>
-            <ActionButton id="signin-action" name="Sign Up" url=""/>
+            <ActionButton id="signup-action" name="Register" url=""/>
             <div className="specData">
                {this.specData()}
             </div>
@@ -135,15 +136,15 @@ class SignInForm extends React.Component {
          <div className="bonus-inputs">
             <label>
                Phone:
-               <input type="text" name="phonenumber"/>
+               <input type="text" id="phonenumber"/>
             </label>
             <label>
                Zip code:
-               <input type="number" name="zipcode"/>
+               <input type="number" id="zipcode"/>
             </label>
             <label>
                Address:
-               <input type="text" name="address"/>
+               <input type="text" id="address"/>
             </label>
          </div>
       )
@@ -177,12 +178,12 @@ class SignInForm extends React.Component {
 
    render(){
       return (
-         <div className="signin">
+         <div className="signup">
             {this.iconPanel()}
-            {this.signInForm()}
+            {this.signUpForm()}
          </div>
       )
    }
 }
 
-export default SignInForm
+export default SignUpForm

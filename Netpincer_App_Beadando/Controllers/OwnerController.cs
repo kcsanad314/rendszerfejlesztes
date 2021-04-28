@@ -28,7 +28,7 @@ namespace Netpincer_App_Beadando.Controllers
             _db.SaveChanges();
             return Ok();
         }
-        
+
         [HttpPost]
         public IActionResult AddFoodCategory(FoodCategory foodCategory)
         {
@@ -57,6 +57,14 @@ namespace Netpincer_App_Beadando.Controllers
             _db.SaveChanges();
             return Ok();
         }
+        [HttpGet]
+        [Route("{userId}")]
+        public IActionResult GetRestaurantByUserId(int userId)
+        {
+            //returns with a list of all the restaurants
+            var result = _db.Restaurants.Where(r => r.UserId == userId).ToList();
+            return Ok(result);
+        }
         //TODO:This 2 method needs to be reorganized to another controller
         //Owner/GetRestaurants
         [HttpGet]
@@ -68,12 +76,42 @@ namespace Netpincer_App_Beadando.Controllers
         }
         //Owner/GetRestaurantFoodlist/{restaurantId}
         [HttpGet]
-        [Route("{restaurantId}")]
-        public IActionResult GetRestaurantFoodList(int restaurantId)
+        public IActionResult GetRestaurantFoodList()
         {
             //returns with a list of foodcategories and its foods of a specific restaurant
-            var result = _db.Restaurants.Where(r => r.Id == restaurantId).Include(r => r.FoodCategories).ThenInclude(fc => fc.Foods).ToList();
+            var result = _db.Restaurants.Include(r => r.FoodCategories).ThenInclude(fc => fc.Foods).ToList();
             return Ok(result);
         }
+
+        
+        [HttpGet]
+        [Route("{restaurantId}")]
+        public IActionResult GetRestaurantOrderList(int restaurantId)
+        {
+            List<Order> result = _db.Orders.Where(o => o.RestaurantId == restaurantId).ToList();
+            return Ok(result);
+        }
+
+        [HttpGet]
+        [Route("{orderId}")]
+        public IActionResult GetListFoodForOrder(int orderId)
+        {
+            List<Food> temp = new List<Food>();
+            List<int> foodIds = new List<int>();
+            foodIds = _db.OrderFood.Where(of => of.OrderId == orderId).Select(of => of.FoodId).ToList();
+            var rest = _db.Restaurants.Include(r => r.FoodCategories).ThenInclude(fc => fc.Foods.Where(f => foodIds.Contains(f.Id))).ToList();
+            foreach(var r in rest)
+            {
+                foreach(var fc in r.FoodCategories)
+                {
+                    foreach(var f in fc.Foods)
+                    {
+                        temp.Add(f);
+                    }
+                }
+            }
+            return Ok(temp);
+        }
+
     }
 }

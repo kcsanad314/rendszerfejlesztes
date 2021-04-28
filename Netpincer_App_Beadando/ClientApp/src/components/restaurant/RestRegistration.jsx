@@ -1,10 +1,9 @@
 import React from 'react'
 import ActionButton from '../ActionButton'
 
-class RestRegistration extends React.Component{
+class RestRegistration extends React.Component {
 
-
-    componentDidMount() {
+    /*componentDidMount() {
         document.getElementById("saverestaurant").addEventListener("click", () => {
             const request = new XMLHttpRequest();
             request.onreadystatechange = () => {
@@ -31,8 +30,8 @@ class RestRegistration extends React.Component{
             request.setRequestHeader("Content-Type", "application/json");
             request.send(JSON.stringify(body));
         });
-        
-    }
+     }
+    */
 
     render() {
         return (
@@ -59,11 +58,11 @@ class RestRegistration extends React.Component{
                <input type="text" id="style" />
                     </label>
                 </div>
-                <ActionButton id="saverestaurant" name="Save" url="" />
+                <ActionButton id="saverestaurant" name="Save" url="/restaurant" />
             </div>
         )
     }
-   
+
 }
 
 export default RestRegistration
