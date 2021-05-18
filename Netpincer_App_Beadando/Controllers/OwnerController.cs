@@ -113,5 +113,46 @@ namespace Netpincer_App_Beadando.Controllers
             return Ok(temp);
         }
 
+        //restaurant -> manage order menüponthoz a státusz frissítéséhez
+        //futárnak is jó az rendelés elfogadásához/kiszállítás teljesítésének jelzéséhez
+        [HttpPut]
+        public IActionResult ChangeOrderStatus(Order order)
+        {
+            var o = _db.Orders.Where(o => o.Id == order.Id).FirstOrDefault();
+            o.OrderStatus = order.OrderStatus;
+            _db.SaveChanges();
+            return Ok(o);
+        }
+
+        //restaurant -> list foods -> kaják mellett egyesével lehessen akciózni. 1. alkalommal százalékosan leértékel, ha már le volt értékelve akkor pedig visszaállíttja az eredeti árat.
+        [HttpPut]
+        public IActionResult MakeDiscount(Food food)
+        {
+            var rest = _db.Restaurants.Include(r => r.FoodCategories).ThenInclude(fc => fc.Foods);
+            foreach (Restaurant r in rest)
+            {
+                foreach (FoodCategory fc in r.FoodCategories)
+                {
+                    foreach(Food f in fc.Foods)
+                    {
+                        if(f.Id == food.Id)
+                        {
+                            if(f.DiscountMultiplier == 1)
+                            {
+                                f.DiscountMultiplier = food.DiscountMultiplier;
+                            }
+                            else
+                            {
+                                f._price /= f.DiscountMultiplier;
+                                f.DiscountMultiplier = 1;
+                            }
+                            
+                        }
+                    }
+                }
+            }
+            _db.SaveChanges();
+            return Ok(food);
+        }
     }
 }

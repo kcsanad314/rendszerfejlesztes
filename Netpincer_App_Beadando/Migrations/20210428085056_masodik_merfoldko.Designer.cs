@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Netpincer_App_Beadando.Models;
 
 namespace Netpincer_App_Beadando.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210428085056_masodik_merfoldko")]
+    partial class masodik_merfoldko
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -42,24 +44,18 @@ namespace Netpincer_App_Beadando.Migrations
                     b.Property<string>("Allergenes")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double>("DiscountMultiplier")
-                        .HasColumnType("float");
-
-                    b.Property<int>("FoodCategoryId")
+                    b.Property<int>("FoodId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("PreparationTime")
+                    b.Property<int>("Price")
                         .HasColumnType("int");
-
-                    b.Property<double>("Price")
-                        .HasColumnType("float");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("FoodCategoryId");
+                    b.HasIndex("FoodId");
 
                     b.ToTable("Food");
                 });
@@ -96,9 +92,6 @@ namespace Netpincer_App_Beadando.Migrations
                     b.Property<string>("City")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("DeliveryTime")
-                        .HasColumnType("int");
-
                     b.Property<string>("FirstName")
                         .IsRequired()
                         .HasMaxLength(255)
@@ -116,7 +109,8 @@ namespace Netpincer_App_Beadando.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("PaymentType")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
 
                     b.Property<string>("PhoneNumber")
                         .HasMaxLength(255)
@@ -279,7 +273,7 @@ namespace Netpincer_App_Beadando.Migrations
                 {
                     b.HasOne("Netpincer_App_Beadando.Models.Entity.FoodCategory", "FoodCategory")
                         .WithMany("Foods")
-                        .HasForeignKey("FoodCategoryId")
+                        .HasForeignKey("FoodId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

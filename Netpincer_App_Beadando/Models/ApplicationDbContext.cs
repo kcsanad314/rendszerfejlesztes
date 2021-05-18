@@ -20,6 +20,11 @@ namespace Netpincer_App_Beadando.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
+            modelBuilder.Entity<Food>()
+                .Property(f => f.Price)
+                .UsePropertyAccessMode(PropertyAccessMode.Property);
+
             modelBuilder.Entity<Restaurant>()
                 .HasMany<FoodCategory>(r => r.FoodCategories)
                 .WithOne(fc => fc.Restaurant)
@@ -29,7 +34,7 @@ namespace Netpincer_App_Beadando.Models
             modelBuilder.Entity<FoodCategory>()
                 .HasMany<Food>(fc => fc.Foods)
                 .WithOne(f => f.FoodCategory)
-                .HasForeignKey(f => f.FoodId)
+                .HasForeignKey(f => f.FoodCategoryId)
                 .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<Availability>()

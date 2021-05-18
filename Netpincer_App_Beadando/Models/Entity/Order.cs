@@ -39,6 +39,26 @@ namespace Netpincer_App_Beadando.Models.Entity
         public string PhoneNumber{ get; set; }
         [MaxLength(255, ErrorMessage = "A(z) {0} maximum {1} karakter lehet.")]
         [Display(Name = "Fizetési típus", AutoGenerateFilter = false, AutoGenerateField = false, Order = 0)]
+        public int _deliveryTime;
+        public int DeliveryTime {
+            get
+            {
+                _deliveryTime = 0;
+                if(OrderFoods != null)
+                {
+                    OrderFoods.ForEach(f =>
+                    {
+                        _deliveryTime += f.Food.PreparationTime;
+                    });
+                    return _deliveryTime;
+                }
+                return 0;
+            }
+            set
+            {
+                _deliveryTime = value;
+            }
+        }
         public string PaymentType{ get; set; }
         public int OrderSum { get; set; }
         public OrderStatus OrderStatus { get; set; }
