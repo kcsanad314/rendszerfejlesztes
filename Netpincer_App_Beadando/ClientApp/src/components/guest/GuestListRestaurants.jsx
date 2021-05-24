@@ -8,7 +8,8 @@ class GuestListRestaurants extends React.Component {
         super();
         this.state = {
             restaurants: json,
-            id: 0
+            id: 0,
+            restId: ""
         };
          this.handleClick = this.handleClick.bind(this);
     }
@@ -27,15 +28,20 @@ class GuestListRestaurants extends React.Component {
             }
             // console.log(restaurants);
             this.setState({
-                restaurants: restaurants
+                restaurants: restaurants,
+                restId: restaurants[0].id
             })
 
         }
         request.send();
     }
 
-   handleClick(key){
-      this.setState({id: key});
+    handleClick(key, restId) {
+        console.log(restId);
+       this.setState({
+           id: key,
+           restId: restId   
+       });
    }
 
     render() {
@@ -43,7 +49,8 @@ class GuestListRestaurants extends React.Component {
         let i = 0;
         for (let rest of this.state.restaurants) {
             rest_arr.push(<RestaurantsList key={i}
-               id={i}
+                id={i}
+                restId={rest.id}
                name={rest.name}
                city={rest.city}
                address={rest.street + " " + rest.houseNumber}
@@ -56,7 +63,7 @@ class GuestListRestaurants extends React.Component {
                <div className="list">
                   {rest_arr}
                </div>
-               <ListFoods category={this.state.restaurants[this.state.id].foodCategories} id={this.state.id} />
+               <ListFoods restaurant={0} category={this.state.restaurants[this.state.id].foodCategories} id={this.state.restId} />
             </div>
         )
     }
@@ -65,8 +72,41 @@ class GuestListRestaurants extends React.Component {
 
 export default GuestListRestaurants
 
-
 const json = [
+    {
+        "id": 1,
+        "name": "vmi",
+        "city": "bp",
+        "street": "",
+        "houseNumber": "",
+        "description": "",
+        "foodCategories": [
+            {
+                "id": 1,
+                "name": "kaja",
+                "restaurantId": 1,
+                "foods": [
+                    {
+                        "id": 1,
+                        "name": "",
+                        "price": 0,
+                        "allergenes": "",
+                        "foodId": 1
+                    },
+                    {
+                        "id": 2,
+                        "name": "",
+                        "price": 0,
+                        "allergenes": "",
+                        "foodId": 1
+                    }
+                ]
+            }
+         ]
+   }
+];
+
+const json2 = [
     {
         "id": 1,
         "name": "",

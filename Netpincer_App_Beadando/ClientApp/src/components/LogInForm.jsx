@@ -2,13 +2,6 @@ import React from 'react'
 import ActionButton from './ActionButton'
 import { Redirect } from 'react-router'
 
-/*
- * 1.) Bejelentkez�s
- * 2.) Ha Owner, akkor m�g 1 request, amin f.n�v �s pw-vel lek�rj�k a user id-t
- * 3.) (User id-t valahogy kimentj�k)
- * 4.) User id alapj�n a m�sik oldalon le tudjuk k�rni a rest id-t
- * 5.) Rest id alapj�n pedig az �teleket
- */
 class LogInForm extends React.Component {
 
     constructor() {
@@ -16,8 +9,7 @@ class LogInForm extends React.Component {
         this.state = {
             redirect: false,
             link: ""
-        };
-        this.orderButton = this.orderButton.bind(this);
+        };        
     }
 
     componentDidMount() {
@@ -38,6 +30,7 @@ class LogInForm extends React.Component {
             request.onload = () => {
                 if (!(request.status === 500)) {
                     const type = JSON.parse(request.responseText);
+                    localStorage.setItem("userId", type.item2);
                     switch (type.item1) {
                         case 1:
                             this.setState({
@@ -59,7 +52,7 @@ class LogInForm extends React.Component {
                     }
                 }
                 else {
-                    alert("Nem jo");
+                    alert("Rossz felhasználó név vagy jelszó!");
                 }
                 //userId = ha ide beadod a bejelentkezett id-t elvileg menni fog a login teljesen
                 // localStorage.setItem("userId", userId);
@@ -67,14 +60,6 @@ class LogInForm extends React.Component {
             request.send(JSON.stringify(body));
         });
     }
-
-
-   orderButton(){
-      this.setState({
-         redirect: true,
-         link: 'order'
-      });
-   }
 
    render(){
       const link = "/" + this.state.link;
@@ -84,7 +69,6 @@ class LogInForm extends React.Component {
 
       return (
          <div>
-            <div className="quick-order" onClick={this.orderButton}>Order without login</div>
             <form className="login-form">
                Username:
                <input type="text" id="username"/>

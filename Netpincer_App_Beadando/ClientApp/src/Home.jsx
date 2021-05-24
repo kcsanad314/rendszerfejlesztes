@@ -13,6 +13,7 @@ import GuestListRestaurants from './components/guest/GuestListRestaurants'
 
 class Home extends React.Component {
 
+   
    render(){
       return (
          <Router>

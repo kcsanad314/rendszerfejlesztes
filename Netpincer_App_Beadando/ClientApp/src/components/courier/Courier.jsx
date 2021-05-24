@@ -1,6 +1,7 @@
 import React from 'react'
 import "./Courier.css"
 import WorkingHours from './WorkingHours'
+import ListOrders from './ListOrders'
 
 class Courier extends React.Component {
 
@@ -23,6 +24,8 @@ class Courier extends React.Component {
    rendering() {
      if(this.state.id === 1)
         return (<WorkingHours />)
+     if(this.state.id === 2)
+        return (<ListOrders />)
   }
 
    render(){
@@ -30,9 +33,7 @@ class Courier extends React.Component {
          <div>
             <div className="sidebar">
                <div id="1" className="sidebarButton">Working <br/>hours</div>
-               <div id="2" className="sidebarButton"></div>
-               <div id="3" className="sidebarButton"></div>
-               <div id="4" className="sidebarButton"></div>
+               <div id="2" className="sidebarButton">Orders</div>
             </div>
             <div className="options">
                {this.rendering()}

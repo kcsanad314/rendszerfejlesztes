@@ -4,6 +4,7 @@ import RestRegistration from './RestRegistration'
 import Menu from './Menu'
 import ListFoods from './ListFoods'
 import ManageOrders from './ManageOrders'
+import OwnerListFoods from './OwnerListFoods'
 
 class Restaurant extends React.Component {
 
@@ -11,7 +12,7 @@ class Restaurant extends React.Component {
       super();
       this.state = {
           id: 0,
-          foods: jsonFoods
+          restaurants: jsonFoods
       }
    }
     /*
@@ -33,19 +34,26 @@ class Restaurant extends React.Component {
             // }
             // console.log(this.state.avatar)
          });
+      }
+
+       
+       const request2 = new XMLHttpRequest();
+       const url2 = "https://localhost:44329/api/Owner/GetRestaurantByUserId/" + localStorage.getItem("userId");
+       request2.open("GET", url2);
+       request2.onload = () => {
+           const data = JSON.parse(request2.responseText);
+           localStorage.setItem("restId", data);
        }
+       request2.send();
+       
+      /*
        const request = new XMLHttpRequest();
        const url = "https://localhost:44329/api/Owner/GetRestaurantFoodList/1";
        request.open("GET", url);
-       //request.setRequestHeader("Content-Type", "application/json");
        request.onload = () => {
-           // console.log(request.responseText);
            const type = JSON.parse(request.responseText);
-           var food_cat = [];
-           // console.log(type);
-           // console.log(type[0].foodCategories);
+           const food_cat = [];
            for (let category of type[0].foodCategories) {
-               // console.log(category.name);
                food_cat.push(category);
            }
            this.setState({
@@ -53,22 +61,24 @@ class Restaurant extends React.Component {
            })
        }
        request.send();
+       */
     }
 
     rendering() {
-      const food_arr = [];
-      let i = 0;
-      for (let food of this.state.foods) {
-          food_arr.push(<ListFoods key={i} category={food}/>);
-          i++;
+      const foods = [];
+      const catNames = [];
+      for(let i = 0; i < this.state.restaurants.length; i++) {
+          foods.push(<ListFoods restaurant={1} id={i} category={this.state.restaurants[i].foodCategories}/>);
+          for(let cat of this.state.restaurants[i].foodCategories)
+             catNames.push(cat.name);
         }
 
       if(this.state.id === 1)
          return (<RestRegistration />)
       if(this.state.id === 2)
-         return (<Menu categories="kecske" />)
-      if (this.state.id === 3)
-         return (<div className="list-foods"></div>)
+         return (<Menu categories={catNames} />)
+        if (this.state.id === 3)
+            return (<OwnerListFoods />)
       if(this.state.id === 4)
          return (<ManageOrders />)
    }
@@ -93,19 +103,35 @@ class Restaurant extends React.Component {
 export default Restaurant
 
 const jsonFoods = [
-   {
-      "name": "",
-      "foods": [
-         {
-            "name": "",
-            "price": "",
-            "allergens": ""
-         },
-         {
-            "name": "",
-            "price": "",
-            "allergens": ""
-         }
-      ]
+    {
+        "id": 1,
+        "name": "",
+        "city": "",
+        "street": "",
+        "houseNumber": "",
+        "description": "",
+        "foodCategories": [
+            {
+                "id": 1,
+                "name": "",
+                "restaurantId": 1,
+                "foods": [
+                    {
+                        "id": 1,
+                        "name": "",
+                        "price": "10",
+                        "allergenes": "",
+                        "foodId": 1
+                    },
+                    {
+                        "id": 2,
+                        "name": "",
+                        "price": 0,
+                        "allergenes": "",
+                        "foodId": 1
+                    }
+                ]
+            }
+         ]
    }
 ];

@@ -29,31 +29,31 @@ namespace Netpincer_App_Beadando.Controllers
             return Ok();
         }
 
+
         [HttpPost]
-        public IActionResult AddFoodCategory(FoodCategory foodCategory)
+        public IActionResult AddFoodCategory2(FoodCategory fc)
         {
-            //init foodcategory object
-            FoodCategory fc = new FoodCategory() {
-                Name = foodCategory.Name,
-                RestaurantId = foodCategory.RestaurantId
-            };
-            //init foodcategory's foodlist and fill it
-            fc.Foods = new List<Food>();
-            foodCategory.Foods.ForEach(food =>
+            var restaurant = _db.Restaurants.Where(r => r.Id == fc.RestaurantId).Include(r => r.FoodCategories).ThenInclude(fc => fc.Foods).FirstOrDefault();
+            if (restaurant.FoodCategories.Any(sfc => sfc.Name == fc.Name))
             {
-                Food _food = new Food()
+                var savedFc = restaurant.FoodCategories.Where(sfc => sfc.Name == fc.Name).FirstOrDefault();
+                fc.Foods.ForEach(food =>
                 {
-                    Name = food.Name,
-                    Price = food.Price,
-                    Allergenes = food.Allergenes
-                };
-                fc.Foods.Add(_food);
-            });
-            //search for the correct restaurant and add the previous objects to it
-            Restaurant rest = _db.Restaurants.Find(fc.RestaurantId);
-            rest.FoodCategories = new List<FoodCategory>();
-            rest.FoodCategories.Add(fc);
-            _db.Add(fc);
+                    Food _food = new Food()
+                    {
+                        Name = food.Name,
+                        Price = food.Price,
+                        Allergenes = food.Allergenes,
+                        PreparationTime = food.PreparationTime
+                    };
+                    savedFc.Foods.Add(_food);
+                });
+            }
+            else
+            {
+                    restaurant.FoodCategories.Add(fc);
+                    _db.Add(fc);
+            }
             _db.SaveChanges();
             return Ok();
         }
@@ -62,7 +62,7 @@ namespace Netpincer_App_Beadando.Controllers
         public IActionResult GetRestaurantByUserId(int userId)
         {
             //returns with a list of all the restaurants
-            var result = _db.Restaurants.Where(r => r.UserId == userId).ToList();
+            var result = _db.Restaurants.Where(r => r.UserId == userId).Select(r => r.Id);
             return Ok(result);
         }
         //TODO:This 2 method needs to be reorganized to another controller
@@ -83,12 +83,27 @@ namespace Netpincer_App_Beadando.Controllers
             return Ok(result);
         }
 
+        [HttpGet]
+        [Route("{restaurantId}")]
+        public IActionResult GetOwnerRestaurant(int restaurantId)
+        {
+            var result = _db.Restaurants.Where(r => r.Id == restaurantId).Include(r => r.FoodCategories).ThenInclude(fc => fc.Foods);
+            return Ok(result);
+        }
+
         
         [HttpGet]
         [Route("{restaurantId}")]
         public IActionResult GetRestaurantOrderList(int restaurantId)
         {
             List<Order> result = _db.Orders.Where(o => o.RestaurantId == restaurantId).ToList();
+            return Ok(result);
+        }
+
+        [HttpGet]
+        public IActionResult GetAllOrders()
+        {
+            var result = _db.Orders.Where(o => o.OrderStatus == OrderStatus.InProgress || o.OrderStatus == OrderStatus.Delivering).OrderBy(o => o.DeliveryTime).ToList();
             return Ok(result);
         }
 

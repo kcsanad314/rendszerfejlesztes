@@ -5,15 +5,13 @@ class ManageOrders extends React.Component {
    constructor(){
       super();
       this.state = {
-         orders: json
+          orders: {}
       }
    }
 
     componentDidMount() {
-        //const restId = localStorage.getItem("userId");
-        const restId = 1;
         const request = new XMLHttpRequest();
-        let url = "https://localhost:44329/api/Owner/GetRestaurantOrderList/" + restId;
+        let url = "https://localhost:44329/api/Owner/GetRestaurantOrderList/" + localStorage.getItem("restId");
 
         request.open("GET", url);
         request.onload = () => {
@@ -33,8 +31,8 @@ class ManageOrders extends React.Component {
 
    render(){
       const orders = [];
-      for (let i = 0; i < this.state.orders.length; i++) {
-         orders.push(<Order key={i} data={this.state.orders[i]} />);
+       for (let i = 0; i < this.state.orders.length; i++) {
+           orders.push(<Order key={i} id={this.state.orders[i].id} data={this.state.orders[i]} />);
       }
       return (
          <div className="orders">
@@ -58,6 +56,21 @@ class Order extends React.Component {
       this.setState({ value: event.target.value });
    }
 
+    handleClick() {
+        const data = {
+            "id": this.props.id,
+            "orderStatus": this.state.value,
+            "firstName": this.props.data.firstName,
+            "lastName": this.props.data.lastName
+        }
+        const request = new XMLHttpRequest();
+        let url = "https://localhost:44329/api/Owner/ChangeOrderStatus";
+
+        request.open("PUT", url);
+        request.setRequestHeader("Content-Type", "application/json");
+        request.send(JSON.stringify(data));
+        alert("Saved successfully!");
+    }
    render(){
       if(this.state.value !== 3){
          return (
@@ -69,6 +82,7 @@ class Order extends React.Component {
                   <div className="order-street">{this.props.data.street}</div>
                   <div className="order-phone">{this.props.data.phoneNumber}</div>
                   <div className="paymentType">{this.props.data.paymentType}</div>
+                  <div className="orderSum">{this.props.data.orderSum} HUF</div>
                   <div className="order-foods"></div>
                </div>
                <div className="functions">
@@ -78,8 +92,8 @@ class Order extends React.Component {
                      <option value="2">Delivering</option>
                      <option value="3">Done</option>
                      <option value="4">Cancelled</option>
-                  </select>
-                  <button id="changeStatus" onClick={()=>{alert("Saved successfully!")}}>Save</button>
+                     </select>
+                     <button id="changeStatus" onClick={() => { this.handleClick() }}>Save</button>
                </div>
             </div>
          )
@@ -110,7 +124,7 @@ const json = [
         "phoneNumber": "",
         "paymentType": "",
         "orderSum": 20000,
-        "orderStatus": 0,
+        "orderStatus": "",
         "restaurantId": 1,
         "userId": 0,
         "orderFoods": null,

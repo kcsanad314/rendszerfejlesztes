@@ -1,0 +1,400 @@
+nem csak az éttermek listát kell betölteni,
+hanem külön statebe
+minden étteremhez tartozó ételeket kategóriákkal együtt
+<ListFoods /> mindig egyet fog ebből megkapni,
+amire kattint a felhasználó
+
+const json = [
+    {
+        "id": 1,
+        "name": "Zing",
+        "city": "Budapest",
+        "street": "Váci út",
+        "houseNumber": "86",
+        "description": "Zingel zongal zangható",
+        "foodCategories": [
+            {
+                "id": 1,
+                "name": "Burgers",
+                "restaurantId": 1,
+                "foods": [
+                    {
+                        "id": 1,
+                        "name": "Zing",
+                        "price": 3000,
+                        "allergenes": null,
+                        "foodId": 1
+                    },
+                    {
+                        "id": 2,
+                        "name": "Szaftos",
+                        "price": 450,
+                        "allergenes": null,
+                        "foodId": 1
+                    },
+                    {
+                        "id": 3,
+                        "name": "Sajtos",
+                        "price": 940,
+                        "allergenes": null,
+                        "foodId": 1
+                    },
+                    {
+                        "id": 4,
+                        "name": "Beles",
+                        "price": 420,
+                        "allergenes": null,
+                        "foodId": 1
+                    }
+                ]
+            },
+            {
+                "id": 2,
+                "name": "Pias",
+                "restaurantId": 1,
+                "foods": [
+                    {
+                        "id": 5,
+                        "name": "Vogyesz",
+                        "price": 900,
+                        "allergenes": "alkohol",
+                        "foodId": 2
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": 2,
+        "name": "Mari koporsója",
+        "city": "SzegedSzentMiki",
+        "street": "Márton Géza út",
+        "houseNumber": "101",
+        "description": "Rettenet hely",
+        "foodCategories": [
+            {
+                "id": 1,
+                "name": "Pizzak",
+                "restaurantId": 2,
+                "foods": [
+                    {
+                        "id": 1,
+                        "name": "Sonkas",
+                        "price": 4321,
+                        "allergenes": "gomba",
+                        "foodId": 1
+                    },
+                    {
+                        "id": 2,
+                        "name": "Bolondos",
+                        "price": 2400,
+                        "allergenes": "kecske/sajt",
+                        "foodId": 1
+                    },
+                    {
+                        "id": 3,
+                        "name": "Burger1",
+                        "price": 3000,
+                        "allergenes": null,
+                        "foodId": 1
+                    },
+                    {
+                        "id": 4,
+                        "name": "Burger1",
+                        "price": 3000,
+                        "allergenes": null,
+                        "foodId": 1
+                    }
+                ]
+            },
+            {
+                "id": 2,
+                "name": "Krumplik",
+                "restaurantId": 2,
+                "foods": [
+                    {
+                        "id": 5,
+                        "name": "Rántott",
+                        "price": 110,
+                        "allergenes": "krumpli",
+                        "foodId": 2
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": 2,
+        "name": "Mari koporsója",
+        "city": "SzegedSzentMiki",
+        "street": "Márton Géza út",
+        "houseNumber": "101",
+        "description": "Rettenet hely",
+        "foodCategories": [
+            {
+                "id": 1,
+                "name": "Pizzak",
+                "restaurantId": 2,
+                "foods": [
+                    {
+                        "id": 1,
+                        "name": "Sonkas",
+                        "price": 4321,
+                        "allergenes": "gomba",
+                        "foodId": 1
+                    },
+                    {
+                        "id": 2,
+                        "name": "Bolondos",
+                        "price": 2400,
+                        "allergenes": "kecske/sajt",
+                        "foodId": 1
+                    },
+                    {
+                        "id": 3,
+                        "name": "Burger1",
+                        "price": 3000,
+                        "allergenes": null,
+                        "foodId": 1
+                    },
+                    {
+                        "id": 4,
+                        "name": "Burger1",
+                        "price": 3000,
+                        "allergenes": null,
+                        "foodId": 1
+                    }
+                ]
+            },
+            {
+                "id": 2,
+                "name": "Krumplik",
+                "restaurantId": 2,
+                "foods": [
+                    {
+                        "id": 5,
+                        "name": "Rántott",
+                        "price": 110,
+                        "allergenes": "krumpli",
+                        "foodId": 2
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": 2,
+        "name": "Mari koporsója",
+        "city": "SzegedSzentMiki",
+        "street": "Márton Géza út",
+        "houseNumber": "101",
+        "description": "Rettenet hely",
+        "foodCategories": [
+            {
+                "id": 1,
+                "name": "Pizzak",
+                "restaurantId": 2,
+                "foods": [
+                    {
+                        "id": 1,
+                        "name": "Sonkas",
+                        "price": 4321,
+                        "allergenes": "gomba",
+                        "foodId": 1
+                    },
+                    {
+                        "id": 2,
+                        "name": "Bolondos",
+                        "price": 2400,
+                        "allergenes": "kecske/sajt",
+                        "foodId": 1
+                    },
+                    {
+                        "id": 3,
+                        "name": "Burger1",
+                        "price": 3000,
+                        "allergenes": null,
+                        "foodId": 1
+                    },
+                    {
+                        "id": 4,
+                        "name": "Burger1",
+                        "price": 3000,
+                        "allergenes": null,
+                        "foodId": 1
+                    }
+                ]
+            },
+            {
+                "id": 2,
+                "name": "Krumplik",
+                "restaurantId": 2,
+                "foods": [
+                    {
+                        "id": 5,
+                        "name": "Rántott",
+                        "price": 110,
+                        "allergenes": "krumpli",
+                        "foodId": 2
+                    }
+                ]
+            }
+        ]
+    }
+];
+[
+    {
+        "id": 1,
+        "name": "Zing",
+        "city": "Budapest",
+        "street": "Váci út",
+        "houseNumber": "86",
+        "description": "Zingel zongal zangható",
+        "foodCategories": [
+            {
+                "id": 1,
+                "name": "Burgers",
+                "restaurantId": 1,
+                "foods": [
+                    {
+                        "id": 1,
+                        "name": "Burger1",
+                        "price": 3000,
+                        "allergenes": null,
+                        "foodId": 1
+                    },
+                    {
+                        "id": 2,
+                        "name": "Burger1",
+                        "price": 3000,
+                        "allergenes": null,
+                        "foodId": 1
+                    },
+                    {
+                        "id": 3,
+                        "name": "Burger1",
+                        "price": 3000,
+                        "allergenes": null,
+                        "foodId": 1
+                    },
+                    {
+                        "id": 4,
+                        "name": "Burger1",
+                        "price": 3000,
+                        "allergenes": null,
+                        "foodId": 1
+                    }
+                ]
+            },
+            {
+                "id": 2,
+                "name": "Pias",
+                "restaurantId": 1,
+                "foods": [
+                    {
+                        "id": 5,
+                        "name": "Vogyesz",
+                        "price": 900,
+                        "allergenes": alkohol,
+                        "foodId": 2
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": 2,
+        "name": "Mari koporsója",
+        "city": "SzegedSzentMiki",
+        "street": "Márton Géza út",
+        "houseNumber": "101",
+        "description": "Rettenet hely",
+        "foodCategories": [
+            {
+                "id": 1,
+                "name": "Pizzak",
+                "restaurantId": 2,
+                "foods": [
+                    {
+                        "id": 1,
+                        "name": "Sonkas",
+                        "price": 4321,
+                        "allergenes": gomba,
+                        "foodId": 1
+                    },
+                    {
+                        "id": 2,
+                        "name": "Bolondos",
+                        "price": 2400,
+                        "allergenes": kecske/sajt,
+                        "foodId": 1
+                    },
+                    {
+                        "id": 3,
+                        "name": "Burger1",
+                        "price": 3000,
+                        "allergenes": null,
+                        "foodId": 1
+                    },
+                    {
+                        "id": 4,
+                        "name": "Burger1",
+                        "price": 3000,
+                        "allergenes": null,
+                        "foodId": 1
+                    }
+                ]
+            },
+            {
+                "id": 2,
+                "name": "Krumplik",
+                "restaurantId": 2,
+                "foods": [
+                    {
+                        "id": 5,
+                        "name": "Rántott",
+                        "price": 110,
+                        "allergenes": krumpli,
+                        "foodId": 2
+                    }
+                ]
+            }
+        ]
+    }
+]
+
+
+- router redirect
+
+   1.kör:
+   rendelni tud mindenki bejelentkezett és nem is
+
+- Rendelésnél:
+json-be =>
+   település, utca, tel szám , firstName , lastName
+   étterem id
+   rendelés össz értéke(ár)
+
+ha be van jelentkezve akkor az id kell majd,
+   ami alapján rendeléskor lekérjük a vendég adatait
+
+
+
+- Rendelés fogadása:
+select - options(új, készítés alatt, szálítás alatt, elutasítva),
+plusz ok gomb
+
+
+
+
+- kajákat jsonbe - id-kat csak
+- option - orderstatus szerint mutassa(tehát ami épp aktív)
+- cart: db-ok
+
+
+restaurant -> listfoods ua a json lekérés legyen?
+- futár elérhetőség megadása
+
+
+Optional:
+Kaják keresése

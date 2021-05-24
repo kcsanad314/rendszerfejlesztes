@@ -3,7 +3,7 @@ import ActionButton from '../ActionButton'
 
 class RestRegistration extends React.Component {
 
-    /*componentDidMount() {
+    componentDidMount() {
         document.getElementById("saverestaurant").addEventListener("click", () => {
             const request = new XMLHttpRequest();
             request.onreadystatechange = () => {
@@ -17,21 +17,33 @@ class RestRegistration extends React.Component {
             const openingHours = document.getElementById("openinghours").value;
             const description = document.getElementById("description").value;
             const style = document.getElementById("style").value;
+            const street = document.getElementById("street").value;
 
             const body = {
                 "Name": name,
                 "City": location,
-                "Street": "utsza",
-                "HouseNumber": "10",
-                "Description": description
+                "Street": street,
+                "Description": description,
+                "UserId": localStorage.getItem("userId")
             }
 
             request.open("POST", url);
             request.setRequestHeader("Content-Type", "application/json");
             request.send(JSON.stringify(body));
+            alert("Restaurant created");
+
+            const request2 = new XMLHttpRequest();
+            const url2 = "https://localhost:44329/api/Owner/GetRestaurantByUserId/" + localStorage.getItem("userId");
+            request2.open("GET", url2);
+            request2.onload = () => {
+                const data = JSON.parse(request2.responseText);
+                localStorage.setItem("restId", data);
+            }
+            request2.send();
         });
+
      }
-    */
+    
 
     render() {
         return (
@@ -42,9 +54,14 @@ class RestRegistration extends React.Component {
                <input type="text" id="name" />
                     </label>
                     <label>
-                        Location:
+                        City:
                <input type="text" id="location" />
                     </label>
+                    <label>
+                        Street:
+               <input type="text" id="street" />
+                    </label>
+                   
                     <label>
                         Opening Hours:
                <input type="text" id="openinghours" />

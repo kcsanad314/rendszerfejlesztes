@@ -7,6 +7,7 @@
 .guest-option {
    position: absolute;
    top: 0;
+   height: 0;
    /* left: 80px; */
 }
 /* inkább ne legyen itt oldalsó gombok */
@@ -16,7 +17,7 @@
    display: flex;
    position: absolute;
    top: 120px;
-   left: 100px;
+   left: 200px;
 }
 
 .list {
@@ -78,14 +79,16 @@
 
 /* LIST-FOODS */
 .foods {
-   position: fixed;
-   top: 80px;
-   left: 460px;
-   width: 350px;
-   height: auto;
+   position: absolute;
+   top: -30px;
+   left: 350px;
+   width: 370px;
+   height: 85vh;
    padding: 20px 15px;
    border: 2px solid #39c6c6;
    border-radius: 8px;
+   /* overflow: hidden; */
+   overflow-y: scroll;
 }
 
 .category {
@@ -121,7 +124,7 @@
 
 /*    CART    */
 .cart {
-   position: absolute;
+   position: relative;
    top: 30px;
    left: 400px;
    display: flex;
@@ -211,4 +214,17 @@
 #order:hover {
    background-color: #eee6dd;
    cursor: pointer;
+}
+
+
+/*    MYORDER    */
+.myorder {
+   position: relative;
+   top: 200px;
+   left: 650px;
+   display: flex;
+   flex-direction: column;
+}
+.myorder > div {
+   margin-bottom: 10px;
 }

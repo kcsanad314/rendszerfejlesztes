@@ -27,8 +27,8 @@ class SignUpForm extends React.Component {
             // console.log(this.state.avatar)
          });
       }
-      /*
-      document.getElementById("signin-action").addEventListener("click", () => {
+      
+      document.getElementById("signup-action").addEventListener("click", () => {
            const request = new XMLHttpRequest();
            const url = "https://localhost:44329/api/User/Create";
 
@@ -45,21 +45,29 @@ class SignUpForm extends React.Component {
            const lastName = document.getElementById("lastname").value;
            const userName = document.getElementById("username").value;
            const password = document.getElementById("password").value;
-           const passwordAgain = document.getElementById("password-again").value;
-           const email = document.getElementById("email").value;
+          const passwordAgain = document.getElementById("password-again").value;
+          let city = "";
+          let street = "";
+          if (type === 0) {
+              city = document.getElementById("city").value;
+              street = document.getElementById("street").value;
+          }
+            
            const body = {
                "UserName": userName,
                "Password": password,
                "ConfirmPassword": passwordAgain,
                "FirstName": firstName,
                "LastName": lastName,
-               "Type" : type
+               "Type": type,
+               "City": city,
+               "Street": street
            }
            request.open("POST", url);
            request.setRequestHeader("Content-Type", "application/json");
            request.send(JSON.stringify(body));
        });
-       */
+       
    }
 
    icon(name){
@@ -135,17 +143,17 @@ class SignUpForm extends React.Component {
       return (
          <div className="bonus-inputs">
             <label>
-               Phone:
-               <input type="text" id="phonenumber"/>
-            </label>
-            <label>
                Zip code:
                <input type="number" id="zipcode"/>
             </label>
             <label>
-               Address:
-               <input type="text" id="address"/>
-            </label>
+               City:
+               <input type="text" id="city"/>
+              </label>
+              <label>
+                  Street:
+               <input type="text" id="street" />
+              </label>
          </div>
       )
    }

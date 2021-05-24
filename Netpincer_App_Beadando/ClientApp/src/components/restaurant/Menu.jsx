@@ -6,51 +6,81 @@ class Menu extends React.Component {
    constructor(){
       super();
       this.state = {
-         category: 0
+          category: 0,
+          catNames: []
       }
       this.catSelected = this.catSelected.bind(this);
    }
 
-    /*componentDidMount() {
-        document.getElementById("savemenu").addEventListener("click", () => {
+    componentDidMount() {
+        document.getElementById("save-menu").addEventListener("click", () => {
             const request = new XMLHttpRequest();
             request.onreadystatechange = () => {
                 if (this.readyState == 4 && this.status == 200) {
                     console.log(request.responseText);
                 }
             }
-            const url = "https://localhost:44329/api/Owner/AddFoodCategory";
+            alert("Saved successfully!");
+            const url = "https://localhost:44329/api/Owner/AddFoodCategory2";
             const category = document.getElementById("category-list").value;
             const foodname = document.getElementById("foodname").value;
             const price = document.getElementById("price").value;
             const allergens = document.getElementById("allergens").value;
             const description = document.getElementById("description").value;
+            const prepTime = document.getElementById("prepTime").value;
 
             const body = {
                 "Name": category,
-                "RestaurantId": "1",
+                "RestaurantId": localStorage.getItem("restId"),
                 "Foods": [
                     {
                         "Name": foodname,
                         "Price": price,
-                        "Allergens": allergens
+                        "Allergens": allergens,
+                        "PreparationTime": prepTime
                     }
                 ],
                 "Street": "utsza",
                 "HouseNumber": "10",
                 "Description": description
+
             }
 
             request.open("POST", url);
             request.setRequestHeader("Content-Type", "application/json");
             request.send(JSON.stringify(body));
+
+            
         });
-    }*/
+        const request2 = new XMLHttpRequest();
+        const url2 = "https://localhost:44329/api/Owner/GetOwnerRestaurant/" + localStorage.getItem("restId");
+        request2.open("GET", url2);
+        request2.onload = () => {
+            const data = JSON.parse(request2.responseText);
+            var restaurants = [];
+
+            for (let restaurant of data) {
+                restaurants.push(restaurant);
+            }
+            const catNames = [];
+            const foods = [];
+            for (let i = 0; i < restaurants.length; i++) {
+                for (let cat of restaurants[0].foodCategories)
+                    catNames.push(cat.name);
+            }
+            this.setState({
+                catNames: catNames
+            })
+            console.log(data);
+        }
+
+        request2.send();
+    }
 
    renderCategories(){
       const cats = [];
-      for(let i = 0; i < this.props.categories.length; i++){
-         cats.push(<option key={i} value={i}>{i}</option>);
+      for(let i = 0; i < this.state.catNames.length; i++){
+          cats.push(<option key={i} value={this.state.catNames[i]}>{this.state.catNames[i]}</option>);
       }
       return cats;
    }
@@ -90,7 +120,7 @@ class Menu extends React.Component {
                <label>
                       Price:
                   <input type="text" id="price"/>
-               </label>
+                  </label>
                <label>
                       Allergens:
                   <input type="text" id="allergens"/>
@@ -98,7 +128,11 @@ class Menu extends React.Component {
                <label>
                       Description:
                   <input type="textfield" id="description"/>
-               </label>
+                  </label>
+                  <label>
+                      Time (min):
+                  <input type="number" id="prepTime" />
+                  </label>
               </div>
               <ActionButton id="save-menu" name="Save" url="/restaurant" />
          </div>

@@ -71,7 +71,8 @@ namespace Netpincer_App_Beadando.Controllers
                 PaymentType = order.PaymentType,
                 OrderSum = order.OrderSum,
                 RestaurantId = order.RestaurantId,
-                UserId = order.UserId
+                UserId = order.UserId,
+                DeliveryTime = order.DeliveryTime
             };
             _order.OrderFoods = new List<OrderFood>();
             List<Food> foods = GetFoodListFromFc(order.RestaurantId, order.FoodIds);

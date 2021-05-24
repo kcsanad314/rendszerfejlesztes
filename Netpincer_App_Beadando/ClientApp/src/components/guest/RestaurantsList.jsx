@@ -17,7 +17,7 @@ function RestaurantsList(props) {
                 {props.description}
             </div>
         </div>
-        <div className="list-button" onClick={() => props.handleClick(props.id)}>
+        <div className="list-button" onClick={() => props.handleClick(props.id, props.restId)}>
            <img src="icons/arrow.png" alt=""/>
         </div>
       </div>

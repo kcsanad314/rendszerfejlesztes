@@ -6,12 +6,32 @@ class Checkout extends React.Component {
    constructor(){
       super();
       this.state = {
-         redirect: false
+          redirect: false,
+          user: false
       }
       this.sendOrder = this.sendOrder.bind(this);
    }
+    componentDidMount() {
+        if (localStorage.getItem("userId") !== null) {
+            const request = new XMLHttpRequest();
+            const url = "https://localhost:44329/api/User/GetUser/" + localStorage.getItem("userId");
+            request.open("GET", url);
+            request.onload = () => {
+                const data = JSON.parse(request.responseText);
+                document.getElementById("firstname").value = data.firstName;
+                document.getElementById("lastname").value = data.lastName;
+                document.getElementById("city").value = data.city;
+                document.getElementById("street").value = data.street;
+            }
+            request.send();
+        }
+    }
+    sendOrder() {
 
-   sendOrder(){
+        let userId = localStorage.getItem("userId");
+        if (userId === null) {
+            userId = 0;
+        }
       let date = new Date();
       const amount = localStorage.getItem("amount");
       const id = localStorage.getItem("restaurantId");
@@ -20,7 +40,8 @@ class Checkout extends React.Component {
       const lastName = document.getElementById("lastname").value;
       const city = document.getElementById("city").value;
       const street = document.getElementById("street").value;
-      const phone = document.getElementById("phone").value;
+      const payment = document.getElementById("payment").value;
+       
 
 
       const datas = {
@@ -28,13 +49,14 @@ class Checkout extends React.Component {
           "FirstName": firstName,
           "LastName": lastName,
           "City": city,
-          "Street:": street,
-          "PhoneNumber": phone,
+          "Street": street,
           "PaymentType": "Bankkártya",
           "OrderSum": amount,
           "OrderStatus": "0",
           "FoodIds": ids,
           "RestaurantId": id,
+          "userId": userId,
+          "paymentType": payment
        }
        const request = new XMLHttpRequest();
        const url = "https://localhost:44329/api/User/CreateOrder";
@@ -44,8 +66,14 @@ class Checkout extends React.Component {
        request.setRequestHeader("Content-Type", "application/json");
        request.send(JSON.stringify(datas));
       // console.log(ids);
-      alert('Thank you for your order!');
-      this.setState({redirect: true});
+        alert('Thank you for your order!');
+        if (localStorage.getItem("userId") === null) {
+            this.setState({ user: true });
+        } else {
+            this.setState({ redirect: true });
+        }
+            
+      
    }
 
    displayCartItems(){
@@ -61,8 +89,16 @@ class Checkout extends React.Component {
 
    render(){
       // {this.displayCartItems()}
-      if(this.state.redirect)
-         return <Redirect to="/" />
+
+       if (this.state.user) {
+           return <Redirect to="/" />
+       } else {
+           if(this.state.redirect) {
+           return <Redirect to="/guest" />
+            }
+       }
+           
+
       return (
          <div>
             <form className="quick-form">
@@ -82,11 +118,21 @@ class Checkout extends React.Component {
                   <label>
                      Street, house number:
                      <input type="text" id="street"/>
-                  </label>
-                  <label>
-                     Phone:
-                     <input type="text" id="phone"/>
-                  </label>
+                      </label>
+                      <label>
+                          Payment type:
+                     <select id="payment">
+                              <option>Credit card</option>
+                              <option>Cash</option>
+                     </select>
+                      </label>
+                      <label>
+                          Please choose:
+                     <select id=":)">
+                              <option>Delivery</option>
+                              <option>Takeaway</option>
+                          </select>
+                      </label>
                </div>
                <button id="order" onClick={() => this.sendOrder()}>Order</button>
             </form>

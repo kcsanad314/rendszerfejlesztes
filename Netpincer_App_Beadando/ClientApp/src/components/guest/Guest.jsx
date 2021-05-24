@@ -1,6 +1,7 @@
 import React from 'react'
 import './Guest.css'
-import GuestListRestaurants from './GuestListRestaurants';
+import GuestListRestaurants from './GuestListRestaurants'
+import MyOrder from './MyOrder'
 
 
 class Guest extends React.Component {
@@ -33,6 +34,8 @@ class Guest extends React.Component {
     rendering() {
         if(this.state.id === 1)
           return (<GuestListRestaurants />);
+        if(this.state.id === 2)
+          return (<MyOrder />);
     }
 
     render() {
@@ -40,8 +43,7 @@ class Guest extends React.Component {
          <div className="guest">
             <div className="sidebar sidebar-guest">
                <div id="1" className="sidebarButton">Restaurants</div>
-               <div id="2" className="sidebarButton"></div>
-               <div id="3" className="sidebarButton"></div>
+               <div id="2" className="sidebarButton">My order</div>
             </div>
             <div className="guest-option">
                {this.rendering()}

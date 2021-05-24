@@ -6,18 +6,56 @@ class ListFoods extends React.Component {
    constructor(){
       super();
       this.state = {
-         items: []
+          items: [],
+          refresh: false
       }
       this.handleClick = this.handleClick.bind(this);
    }
 
+    //shouldComponentUpdate() {
+    //}
+
    handleClick(name, price, id){
-      const tuple = [name, price, id];
-      this.setState(prevState => {
-         return {
-            items: [...prevState.items, tuple]
+      if(this.props.restaurant === 1){
+         const disc = prompt("Please enter the discount(%):", "");
+         let newPrice = (1 - disc/100);
+          const request = new XMLHttpRequest();
+          const url = "https://localhost:44329/api/Owner/MakeDiscount";
+          let newId = 0;
+          for (let category of this.props.category) {
+              for (let food of category.foods) {
+                  if (food.name === name) {
+                      newId = food.id;
+                  }
+              }
+          }
+          const body = {
+              "id": newId,
+              "discountMultiplier": newPrice,
+          }
+
+          request.open("PUT", url);
+          request.setRequestHeader("Content-Type", "application/json");
+          request.send(JSON.stringify(body));
+          this.setState({
+              refresh: true
+          });
+      }
+      else {
+         let contains = false;
+         const tuple = [name, price, id];
+         for(let e of this.state.items){
+            if(e[0] === tuple[0])
+               contains = true;
          }
-      });
+         if(!contains){
+            this.setState(prevState => {
+               return {
+                  items: [...prevState.items, tuple]
+               }
+            });
+         }
+       }
    }
 
    render(){
@@ -30,7 +68,7 @@ class ListFoods extends React.Component {
             foods.push(<Food key={i}
                id={i+1}
                name={food.name}
-               price={food.price}
+               price={food._price}
                allergenes={food.allergenes}
                categoryName={cat ? category.name : null}
                addToCart={this.handleClick}
@@ -40,14 +78,27 @@ class ListFoods extends React.Component {
          }
       }
 
-      return (
-          <div className="foods">
-              {foods}
-              <Cart items={this.state.items}
-                  name={this.state.name}
-                  id={this.props.id} />
-          </div>
-      )
+      if(this.props.restaurant === 0){
+         return (
+            <div>
+               <div className="foods">
+                  {foods}
+                </div>
+                 <Cart items={this.state.items}
+                     name={this.state.name}
+                     id={this.props.id} />
+            </div>
+         )
+      }
+      else {
+         return (
+             <div className="foods-restaurant">
+                <div className="foods">
+                   {foods}
+                </div>
+             </div>
+         )
+      }
    }
 }
 

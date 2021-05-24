@@ -74,15 +74,24 @@ font-size: 18px;
 }
 
    /* LIST FOODS */
+.foods-restaurant {
+   position: absolute;
+   top: 0px;
+   left: -530px;
+   /* width: 200px;
+   height: 20px;
+   background-color: #fff; */
+}
+
 .list-foods {
    display: flex;
    flex-direction: column;
    justify-content: center;
-   width: 500px;
-   height: 700px;
-   /* margin-top: 20px; */
+   width: 360px;
+   padding: 20px 0px;
    border: 2px solid #45B8AC;
    border-radius: 8px;
+   height: 50vh;
 }
 
 .food-category {
@@ -125,9 +134,10 @@ font-size: 18px;
    width: 90px;
    height: 35px;
    margin-left: 40px;
-   border: 1px solid black;
+   border: 0px solid black;
    border-radius: 4px;
    font-size: 16px;
+   background-color: #7FCDCD;
 }
 #changeStatus:hover {
    cursor: pointer;
